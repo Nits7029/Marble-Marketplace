@@ -365,21 +365,6 @@ const StyledMenuList = styled(MenuList, {
   width: '400px',
   backdropFilter: 'blur(30px)',
 })
-// const StyledMenuItem = styled('div', {
-//   background: 'rgba(05, 06, 22, 0.2)',
-//   boxShadow: '0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6D6D78',
-//   backDropFilter: 'blur(40px)',
-//   borderRadius: '20px',
-//   padding: '20px 25px',
-//   margin: '10px 0',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'space-between',
-//   cursor: 'pointer',
-//   '&:hover': {
-//     opacity: '0.7 !important',
-//   },
-// })
 const ProfileMenuItem = styled('div', {
   backDropFilter: 'blur(40px)',
   margin: '5px 0',

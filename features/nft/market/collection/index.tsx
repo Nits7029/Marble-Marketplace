@@ -331,7 +331,8 @@ export const Collection = ({ id }: CollectionProps) => {
       <CollectionWrapper>
         <Banner>
           <BannerImage src={collectionInfo.featuredImage} alt="banner" />
-          <Stack spacing={5}>
+
+          <Stack spacing={5} className="collection-content">
             <Logo src={collectionInfo.logo} alt="logo" />
             <LogoTitle>{collectionInfo.name}</LogoTitle>
             {wallet.accountId === collectionInfo.creator && (
@@ -429,7 +430,9 @@ export const Collection = ({ id }: CollectionProps) => {
   )
 }
 
-const CollectionWrapper = styled.div``
+const CollectionWrapper = styled.div`
+  position: relative;
+`
 const Heading = styled.div`
   padding: 40px;
   display: flex;
@@ -452,17 +455,15 @@ const LogoTitle = styled.div`
 `
 const Banner = styled.div`
   position: relative;
-  height: 900px;
+  height: calc(100vh - 110px);
   width: 100%;
   display: block;
-  padding: 200px 50px 50px 50px;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.06) 100%
   );
   backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   @media (max-width: 1550px) {
     height: 675px;
     padding: 150px 50px 50px 50px;
@@ -486,8 +487,8 @@ const BannerImage = styled.img`
 
 `
 const Logo = styled.img`
-  width: 180px;
-  height: 180px;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   border: 10px solid #ffffff21;
   @media (max-width: 1550px) {

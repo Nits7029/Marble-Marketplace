@@ -162,9 +162,6 @@ const CollectionInfo = ({ info }) => {
 
 const Container = styled.div`
   border-radius: 30px;
-  // background: rgba(255, 255, 255, 0.06);
-  // border:1px solid rgba(255,255,255,0.2);
-  // box-shadow: 0px 7px 14px 0px #0000001a;
   backdrop-filter: blur(30px);
   margin: 10px 0;
   padding: 28px 0 20px 0;
@@ -203,14 +200,9 @@ const ImgDiv = styled.div`
   }
 `
 const CreatorInfo = styled.div`
-  // background: rgba(255, 255, 255, 0.06);
-  // border: 1px solid rgba(255, 255, 255, 0.2);
-  // box-shadow:0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-  // border-radius: 50px !important;
   display: flex;
   align-items:center;
   padding: 13px;
-  // align-items: center;
   height: 70px;
   width: 210px;
   border-radius:50% !important;

@@ -1677,10 +1677,7 @@
   })
 
   const NftBuyOfferTag = styled('div', {
-    // border: '1px solid rgba(255,255,255,0.2)',
     borderRadius: '30px',
-    // padding: '20px',
-    // background: 'rgba(255,255,255,0.06)',
     height: '100%',
     marginBottom: '20px',
 
@@ -1708,9 +1705,7 @@
     '&.disabled': {
       color: '$textColors$disabled',
     },
-    // '@media (max-width: 1024px)': {
-    //   paddingLeft: '0',
-    // },
+
 
     '@media (max-width: 480px)': {
       padding: '15px 20px',
@@ -1723,9 +1718,7 @@
     ' .price-lbl': {
       color: '$colors$link',
     },
-    // '@media (max-width: 1200px)': {
-    //   padding: '0',
-    // },
+  
     '@media (max-width: 480px)': {
       padding: '15px 20px',
     },
@@ -1771,13 +1764,11 @@
 
   const Banner = styled('div', {
     position: 'relative',
-    // minHeight: 'calc(100vh - 263px)',
     width: '100%',
     display: 'block',
     paddingTop: '110px',
 
     '@media (max-width: 1024px)':{
-      // height: '100%',
       paddingTop: '65px',
     },
 
@@ -1810,8 +1801,6 @@
     '@media (max-width: 576px)': {
       height: 'calc(100vh - 73%)',
     },
-    // opacity: '0.1',
-    // backgroundColor:"Blue",
   })
   const NFTImageWrapper = styled('div', {
     position: 'relative',
@@ -1855,6 +1844,3 @@
       height: 'calc(100% - 40px)',
     },
   })
-  // const Grid = styled('div', {
-  //  backgroundColor:"red";
-  // })
