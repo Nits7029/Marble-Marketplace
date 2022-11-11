@@ -332,7 +332,7 @@ export const Collection = ({ id }: CollectionProps) => {
         <Banner>
           <BannerImage src={collectionInfo.featuredImage} alt="banner" />
 
-          <Stack spacing={5} className="collection-content">
+          <Stack spacing={5} className="collection-content curated-collect">
             <Logo src={collectionInfo.logo} alt="logo" />
             <LogoTitle>{collectionInfo.name}</LogoTitle>
             {wallet.accountId === collectionInfo.creator && (
@@ -346,16 +346,20 @@ export const Collection = ({ id }: CollectionProps) => {
                 />
               </Stack>
             )}
-            <ProfileLogo>
+            <ProfileLogo className="bg-border-linear round-icon">
               <RoundedIconComponent
-                size="44px"
+                size="48px"
                 address={collectionInfo.creator}
               />
             </ProfileLogo>
           </Stack>
         </Banner>
-        <Heading>
-          <Text fontSize={isMobile() ? '24px' : '46px'} fontWeight="700">
+      
+        <NftList
+          className={`${isCollapse ? 'collapse-close' : 'collapse-open'}`}
+        >
+            <Heading>
+          <Text fontSize={isMobile() ? '24px' : '46px'} fontWeight="600">
             NFTs
           </Text>
 
@@ -376,9 +380,6 @@ export const Collection = ({ id }: CollectionProps) => {
             </Link>
           )}
         </Heading>
-        <NftList
-          className={`${isCollapse ? 'collapse-close' : 'collapse-open'}`}
-        >
           <InfiniteScroll
             dataLength={numTokens}
             next={getMoreNfts}
@@ -434,23 +435,33 @@ const CollectionWrapper = styled.div`
   position: relative;
 `
 const Heading = styled.div`
-  padding: 40px;
+  // padding: 40px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #363b4e;
+  // border-bottom: 1px solid #363b4e;
+
   align-items: center;
   @media (max-width: 480px) {
-    padding: 20px;
+    padding: 0px;
   }
 `
 const LogoTitle = styled.div`
-  font-size: 96px;
+  font-size: 95px;
   font-weight: 900;
+  margin:39px 0 100px !important;
+  
   @media (max-width: 1550px) {
     font-size: 72px;
   }
+
+  @media (max-width: 1024px) {
+    font-size: 50px;
+    margin: 24px 0 !important;
+  }
   @media (max-width: 480px) {
     font-size: 30px;
+    margin:24px 0 !important;
+    max-width: 270px;
   }
 `
 const Banner = styled.div`
@@ -464,13 +475,27 @@ const Banner = styled.div`
     rgba(255, 255, 255, 0.06) 100%
   );
   backdrop-filter: blur(30px);
+  padding: 0px 40px 0px;
+  z-index:999 !important;
+
+  &::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color: rgb(50 50 50 / 50%);
+    z-index:-1;
+  }
+
   @media (max-width: 1550px) {
     height: 675px;
     padding: 150px 50px 50px 50px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 576px) {
     height: 100%;
-    padding: 150px 20px 20px 20px;
+    padding: 260px 0;
   }
 `
 const BannerImage = styled.img`
@@ -517,7 +542,7 @@ const SelectOption = styled.div<{ isActive: boolean }>`
 const TabWrapper = styled.div``
 
 const NftList = styled.div`
-  padding: 40px;
+  padding: 49px 49px 0px;
   @media (max-width: 480px) {
     padding: 20px;
     width: 100%;
@@ -525,9 +550,9 @@ const NftList = styled.div`
 `
 const ProfileLogo = styled.div`
   padding: 10px;
-  border-radius: 60px;
-  background: rgba(0, 0, 0, 0.2);
-  display: flex;
-  width: fit-content;
+  display: block;
+  width: 210px;
   align-items: center;
+  z-index:99;
+  margin-top:0 !important;
 `

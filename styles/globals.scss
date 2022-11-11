@@ -1039,7 +1039,10 @@ div {
 }
 
 .profile-text{
-  font-size: 14px !important;
+  font-size: 20px !important;
+  @media (max-width:576px) {
+    font-size: 15px !important;
+  }
 }
 
 .dropbtn {
@@ -1653,7 +1656,10 @@ footer {
 }
 .collection-content{
   position: absolute;
-  bottom: 0;
+  bottom: 50px;
+  @media (max-width:576px) {
+    padding: 0 0 0 30px;
+  }
 }
 .p-20 {
   margin:100px 0px !important; 

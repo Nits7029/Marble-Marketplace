@@ -118,7 +118,7 @@ const NFTUpload = ({ data, dispatch, item }) => {
             className={css.files}
             onChange={(e) => handleFileSelectBIU(e)}
           />
-          <label htmlFor="fileSelectBIU">
+          <label htmlFor="fileSelectBIU" style={{fontSize:"16px"}} >
             <ImageWrapper>
               <NFTUploadImage />
             </ImageWrapper>

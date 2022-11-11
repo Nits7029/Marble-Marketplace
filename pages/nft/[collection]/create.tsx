@@ -218,7 +218,7 @@ export default function NFTCreate() {
   const UploadImage = () => {
     return (
       <Stack padding={isMobile() ? '0' : '0 100px'} spacing="40px">
-        {!isMobile() && <h2>Upload A Media File</h2>}
+        {!isMobile() && <h2  style={{fontWeight:"400"}} >Upload A Media File</h2>}
         <NFTUpload data={data} dispatch={dispatch} item="nft-create" />
       </Stack>
     )
@@ -230,7 +230,7 @@ export default function NFTCreate() {
           <Container>
             <Stack alignItems="center" spacing="50px">
               <Stack>
-                <h1>Create On Marble Dao</h1>
+                <h1>Create on Marble Dao</h1>
                 {!agreed && !collection.count && (
                   <p style={{ textAlign: 'center' }}>
                     Before you mint your first NFT, Please read through and
@@ -309,7 +309,7 @@ export default function NFTCreate() {
                       </Stack>
                     </Card>
                   ) : (
-                    <Card fullWidth>
+                    <Card fullWidth className="bg-border-linear">
                       <UploadImage />
                     </Card>
                   )}
@@ -330,7 +330,7 @@ export default function NFTCreate() {
                   )}
                 </MainWrapper>
               ) : (
-                <Card>
+                <Card className="bg-border-linear">
                   <Stack spacing="70px">
                     <h2>Here&apos;s a Summary</h2>
                     <Stack>
@@ -429,7 +429,10 @@ const Container = styled.div`
   }
   h1 {
     font-size: 46px;
-    font-weight: 600;
+    font-weight: 500;
+    @media (max-width: 1024px) {
+      font-size: 22px;
+    }
   }
   h2 {
     font-size: 30px;
@@ -468,19 +471,19 @@ const Container = styled.div`
 `
 const Card = styled.div<{ fullWidth: boolean }>`
   padding: 40px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
-    inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-  backdrop-filter: blur(30px);
+  // background: linear-gradient(
+  //   180deg,
+  //   rgba(255, 255, 255, 0.06) 0%,
+  //   rgba(255, 255, 255, 0.06) 100%
+  // );
+  // box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
+  //   inset 0px 14px 24px rgba(17, 20, 29, 0.4);
+  // backdrop-filter: blur(30px);
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 30px;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : '60%')};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  // border: 1px solid rgba(255, 255, 255, 0.2);
   @media (max-width: 480px) {
     width: 100%;
     padding: 20px;
@@ -575,16 +578,27 @@ const MainWrapper = styled.div`
   aling-items: start;
   column-gap: 40px;
   justify-content: space-between;
+  width:1000px;
 
-  // @media (max-width: 768px) {
-  //   display: block !important;
-  //   width: 100%;
-  //   row-gap: 20px;
-  // }
 
-  @media (max-width: 480px) {
+  @media (max-width: 1200px) {
+    width: 760px !important;
+    padding: 20px;
+  }
+
+  @media (max-width: 876px) {
+    width: 560px !important;
+    padding: 20px;
+    margin-top:30px;
+  }
+
+  @media (max-width: 640px) {
     flex-direction: column-reverse;
     width: 100%;
     row-gap: 20px;
+    width: 100% !important;
+    padding: 15px;
   }
+  
+
 `
