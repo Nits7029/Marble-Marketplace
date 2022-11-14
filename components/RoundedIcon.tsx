@@ -10,8 +10,8 @@ export const RoundedIcon = styled.img<{ size: string }>`
   border-radius: 50%;
   border: 1px solid #ffffff;
   @media (max-width:576px){
-    width:38px;
-    height:38px;
+    width:50px;
+    height:50px;
   }
 `
 
@@ -44,7 +44,7 @@ export const RoundedIconComponent = ({
     <Link  href={`/profile/${address}`}>
       <Flex direction={direction}>
         {size !== '0px' && <RoundedIcon size={size} src={src}/>}
-        <Text fontSize={font} className={`${font=='14px'?'profile-text':''}`} fontWeight="500" fontFamily="Mulish" textOverflow="ellipsis" overflow="hidden" whiteSpace="noWrap">
+        <Text fontSize={font} className={`${font=='14px'?'profile-text':''}`} fontWeight="500" fontFamily="Mulish" textOverflow="ellipsis" overflow="hidden">
           {user}
         </Text>
       </Flex>

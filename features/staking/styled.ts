@@ -2,22 +2,26 @@ import styled from 'styled-components'
 import { GradientBackground } from 'styles/styles'
 
 export const Container = styled.div`
-  max-width: 70vw;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content:center;
+  min-height:calc(100vh - 80px);
+  height:100%;
 `
 export const Header = styled.div`
   font-size: 50px;
-  font-weight: 700;
+  font-weight: 600;
+  margin-bottom:30px;
 `
-export const StakingCardWrapper = styled(GradientBackground)`
+export const  StakingCardWrapper = styled(GradientBackground)`
   padding: 40px;
   width: 100%;
   border-radius: 20px;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+  min-height: 622px;
+  height:100%;
 `
 export const CollectionCardWrapper = styled.div``
 

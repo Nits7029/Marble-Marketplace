@@ -122,7 +122,6 @@ const StyledButton = styled.button`
 `
 
 const IntroContainer = styled.div`
-
   flex-wrap: wrap;
   margin-top: 60px;
   height:100%;
@@ -132,7 +131,6 @@ const IntroContainer = styled.div`
   position:relative;
 
   @media (max-width: 576px) {
-    // flex-direction: column-reverse;
     padding: 0px;
     margin-top: 0px;
     justify-content:start;
@@ -146,7 +144,6 @@ const IntroContainer = styled.div`
     left: -230px;
     width: 100%;
     height: 100px;
-    /* background-size: cover; */
     background-repeat: no-repeat;
 
     @media (max-width: 1024px) {
@@ -166,7 +163,6 @@ const Title = styled.div`
   font-size: 50px;
   font-weight: 600;
   margin-bottom: 70px;
-  // padding: 40px 0;
   position:relative;
 
   @media (max-width: 1550px) {
@@ -194,8 +190,6 @@ const Title = styled.div`
 const MiniInfoCard = styled.div`
 position: relative;
 width: 30%;
-// box-shadow: rgb(42 47 50 / 9%) 0px 4px 40px, rgb(109 109 120) 0px 7px 24px inset;
-// backdrop-filter: blur(40px);
 border-radius: 20px;
 padding: 15px;
 
@@ -203,26 +197,12 @@ padding: 15px;
   width: 100%;
   margin:0 auto;
 }
-  // &::before {
-  //   content: "";
-  //   position: absolute;
-  //   inset: 0;
-  //   border-radius: 20px;
-  //   padding: 1px;
-  //   background-color:#050616 !important ;
-  //   background: -webkit-linear-gradient(161deg, rgba(42,47,50,0.9) 0%, rgba(109,109,120,1) 100%);
-  //   -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  //   -webkit-mask-composite: xor;
-  //   mask-composite: exclude;
-  //   opacity:0.8;
-  // }
 
 `
 
 const MiniInfoTitle = styled.div`
   font-size: 16px;
   margin: 0 0 15px 0;
-  // padding: 30px;
   font-weight:400;
   font-family: Mulish;
 
@@ -292,9 +272,6 @@ const NFTPicture = styled.div`
     left:-5px;
     width:544px !important;
     height: 100% !important;
-    // border:1px solid #fff;
-    // box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-    // background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.06) 100%);
     z-index:-1;
     border-radius: 30px;
 
@@ -329,7 +306,6 @@ const Img = styled.img`
 const IntroWrapper = styled.div`
   flex: 0 0 auto;
   width: 58.33333333%;
-  // row-gap: 40px;
   padding: 30px 0;
 
   @media (max-width: 1550px) {
@@ -362,7 +338,6 @@ const PriceArea = styled.div`
     font-size: 20px;
     font-weight:400 !important;
     margin-left:20px !important;
-    // margin-top: 10px !important;
   }
   @media (max-width: 1550px) {
     p {

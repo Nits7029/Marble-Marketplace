@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 export default function NftCollectionCard({ collection }): JSX.Element {
   return (
-    <CollectionDiv className="collection">
+    <CollectionDiv className="collection bg-border-linear">
       <ImgDiv className="nft-img-div">
         <Image src={collection.image} alt="NFT Image" />
       </ImgDiv>
@@ -29,15 +29,6 @@ export default function NftCollectionCard({ collection }): JSX.Element {
 
 const CollectionDiv = styled.div`
   border-radius: 20px;
-  box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6d6d78;
-  border: 1px solid;
-  border-image-source: linear-gradient(
-    90.65deg,
-    #ffffff 0.82%,
-    rgba(0, 0, 0, 0) 98.47%
-  );
-  background: linear-gradient(0deg, #050616, #050616) padding-box,
-    linear-gradient(90.65deg, #ffffff 0.82%, rgba(0, 0, 0, 0) 98.47%) border-box;
   padding: 30px;
   height: 100%;
   cursor: pointer;

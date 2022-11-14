@@ -378,7 +378,7 @@ export const Collection = ({ id }: CollectionProps) => {
                 Mint NFT
               </Button>
             </Link>
-          )}
+         )}
         </Heading>
           <InfiniteScroll
             dataLength={numTokens}
@@ -435,10 +435,8 @@ const CollectionWrapper = styled.div`
   position: relative;
 `
 const Heading = styled.div`
-  // padding: 40px;
   display: flex;
   justify-content: space-between;
-  // border-bottom: 1px solid #363b4e;
 
   align-items: center;
   @media (max-width: 480px) {
@@ -516,6 +514,7 @@ const Logo = styled.img`
   height: 190px;
   border-radius: 50%;
   border: 10px solid #ffffff21;
+  object-fit:cover;
   @media (max-width: 1550px) {
     width: 135px;
     height: 135px;

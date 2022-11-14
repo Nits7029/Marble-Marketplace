@@ -301,9 +301,6 @@ const ProfileContainer = styled.div`
 `
 const ProfileInfo = styled.div`
   padding: 180px 50px 50px 50px;
-  // background: rgba(05, 06, 22, 0.2);
-  // box-shadow: 0px 4px 40px rgb(42 47 50 / 9%), inset -20px 1px 24px #6d6d78;
-  /* Note: backdrop-filter has minimal browser support */
   width:640px;
   border-radius: 0 !important;
   height: fit-content;
@@ -313,10 +310,7 @@ const ProfileInfo = styled.div`
     max-width:90% !important;
     margin:0 auto;
   }
-  // @media (max-width: 480px) {
-  //   padding: 80px 25px 25px 25px;
-  //   width:100% !important;
-  // }
+
 `
 const VerticalDivider = styled.div`
   border: 1px solid #5f5858;
@@ -325,9 +319,6 @@ const VerticalDivider = styled.div`
   height: 0px;
 `
 const Card = styled.div`
-  // background: rgba(05, 06, 22, 0.2);
-  // box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6d6d78;
-  // backdrop-filter: blur(40px);
   border-radius: 20px;
   padding: 20px 25px;
   @media (max-width: 480px) {
@@ -339,7 +330,6 @@ const Card = styled.div`
 const ProfileNFTInfo = styled.div`
   @media (max-width: 480px) {
     padding: 10px 0px;
-    // width: 100%;
   }
 `
 const StyledTabList = styled(TabList)`

@@ -209,8 +209,6 @@ const PartnerGrid = styled.div`
     display: none;
   }
   @media (max-width: 992px) {
-    // width: 100vw;
-    // display:block;
     display:flex;
     overflow-x:auto;
     max-width:400px;
@@ -239,8 +237,6 @@ const StyledButton = styled.button`
   }
 `
 const MarbleCardGrid = styled.div`
-  // display: grid;
-  // grid-template-columns: 1fr 1fr;
   display:flex;
   align-items: center;
   
@@ -249,8 +245,6 @@ const MarbleCardGrid = styled.div`
   }
   @media (max-width: 768px) {
     flex-wrap:wrap;
-    // display: block;
-    // flex-direction: column-reverse;
   }
   @media (max-width: 768px) {
     padding: 0;

@@ -50,9 +50,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-image: url('/images/background.jpg');
-  // background-position: center;
   background-repeat: no-repeat;
-  // background-size: cover;
   position: relative;
   color: white;
   background-color: #191c2b;
@@ -73,7 +71,6 @@ const StyledFooter = styled.div`
   margin-top: 80px;
   flex-direction: column;
   justify-content: space-between;
-  // padding: 40px 0 0 0;
 `
 
 const StyledFooterWrapper = styled.div`

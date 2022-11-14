@@ -3,7 +3,7 @@ import { SVGProps } from 'react'
 export const NFTUploadImage = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="110"
+      // width="110"
       height="73"
       viewBox="0 0 110 73"
       fill="none"

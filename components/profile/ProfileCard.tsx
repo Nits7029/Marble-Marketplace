@@ -39,9 +39,6 @@ export default ProfileCard
 const Container = styled.div`
   padding: 30px;
   border-radius: 60px;
-  // background: rgba(05, 06, 22, 0.2);
-  // box-shadow:0px 4px 40px rgb(42 47 50 / 9%), inset -20px 1px 24px #6d6d78;
-  // backdrop-filter: blur(40px);
   /* Note: backdrop-filter has minimal browser support */
   cursor: pointer;
   border-radius: 20px;
@@ -49,9 +46,7 @@ const Container = styled.div`
   @media (max-width: 1550px) {
     padding: 15px;
   }
-  // @media (max-width: 480px) {
-  //   width: 320px;
-  // }
+
 `
 const ImgDiv = styled.div`
   width: 100%;

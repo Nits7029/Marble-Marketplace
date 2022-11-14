@@ -87,7 +87,7 @@ const CollectionInfo = ({ info }) => {
   }, [info])
   return (
     <Container className="bg-border-linear">
-      <ChakraProvider className="collection-tab">
+      <ChakraProvider>
         <Flex justifyContent="space-between" className="collection-card-grid">
           <HStack>
             <ImgDiv>

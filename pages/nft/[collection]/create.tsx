@@ -218,7 +218,7 @@ export default function NFTCreate() {
   const UploadImage = () => {
     return (
       <Stack padding={isMobile() ? '0' : '0 100px'} spacing="40px">
-        {!isMobile() && <h2  style={{fontWeight:"400"}} >Upload A Media File</h2>}
+        {<h2  style={{fontWeight:"400"}} >Upload A Media File</h2>}
         <NFTUpload data={data} dispatch={dispatch} item="nft-create" />
       </Stack>
     )
@@ -471,19 +471,9 @@ const Container = styled.div`
 `
 const Card = styled.div<{ fullWidth: boolean }>`
   padding: 40px;
-  // background: linear-gradient(
-  //   180deg,
-  //   rgba(255, 255, 255, 0.06) 0%,
-  //   rgba(255, 255, 255, 0.06) 100%
-  // );
-  // box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
-  //   inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-  // backdrop-filter: blur(30px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 30px;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : '60%')};
-  // border: 1px solid rgba(255, 255, 255, 0.2);
   @media (max-width: 480px) {
     width: 100%;
     padding: 20px;
@@ -507,7 +497,6 @@ const Input = styled(Textarea)`
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09) !important;
   backdrop-filter: blur(40px) !important;
-  /* Note: backdrop-filter has minimal browser support */
   font-family: Mulish;
   border-radius: 20px !important;
 `
@@ -597,7 +586,8 @@ const MainWrapper = styled.div`
     width: 100%;
     row-gap: 20px;
     width: 100% !important;
-    padding: 15px;
+    padding: 20px;
+    margin-top:0 !important;
   }
   
 

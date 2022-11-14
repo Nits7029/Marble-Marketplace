@@ -103,13 +103,13 @@ export const FooterBar = () => {
               <ContainerForFooterLinks
                 className={`footer-links ${openQuickNav ? 'open' : 'close'}`}
               >
-                <Link href="#" passHref className="footer-link">
+                <Link href="#" passHref>
                   Feed
                 </Link>
-                <Link href="#" passHref  className="footer-link">
+                <Link href="#" passHref>
                   Browse
                 </Link>
-                <Link href="/transfer" passHref  className="footer-link">
+                <Link href="/transfer" passHref>
                   DeFi
                 </Link>
               </ContainerForFooterLinks>

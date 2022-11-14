@@ -295,7 +295,7 @@ const Staking = () => {
   return (
     <Container>
       <Header>NFT staking</Header>
-      <StakingCardWrapper>
+      <StakingCardWrapper className="bg-border-linear">
         <CollectionCardWrapper>
           <CollectionCard collection={collection} />
         </CollectionCardWrapper>

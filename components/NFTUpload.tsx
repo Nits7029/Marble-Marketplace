@@ -118,9 +118,9 @@ const NFTUpload = ({ data, dispatch, item }) => {
             className={css.files}
             onChange={(e) => handleFileSelectBIU(e)}
           />
-          <label htmlFor="fileSelectBIU" style={{fontSize:"16px"}} >
-            <ImageWrapper>
-              <NFTUploadImage />
+          <label htmlFor="fileSelectBIU" className='font-16' >
+            <ImageWrapper className="image-upload">
+              <NFTUploadImage  />
             </ImageWrapper>
             Drag and drop, or click to upload a JPG, PNG, GIF,
             <br />
@@ -132,11 +132,9 @@ const NFTUpload = ({ data, dispatch, item }) => {
   )
 }
 const DropzoneContainer = styled.div`
-  background: #272734;
   border: 2px dashed rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09);
   backdrop-filter: blur(40px);
-  /* Note: backdrop-filter has minimal browser support */
   padding: 30px;
   border-radius: 20px;
   display: flex;
@@ -148,11 +146,15 @@ const DropzoneContainer = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  @media (max-width:576px){
+    padding: 0 0 30px 0 !important;
+
+  }
 `
 const ImageWrapper = styled.div`
   padding: 80px;
-  @media (max-width: 480px) {
-    padding: 40px;
+  @media (max-width: 576px) {
+    padding: 0 40px 10px;
   }
 `
 export default NFTUpload

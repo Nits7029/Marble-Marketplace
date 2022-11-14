@@ -111,7 +111,6 @@ export function NftCard({ nft, id, type }): JSX.Element {
 const NftCardDiv = styled.div<{ color: string; revertColor: boolean }>`
   border-radius: 20px;
   box-shadow:0px 4px 40px rgb(42 47 50 / 9%), inset -6px 3px 24px #41414e;
-  // border: 1px solid rgba(255, 255, 255, 0.2);
   background: ${({ color }) => color};
   padding: 30px;
   height: 100%;
@@ -169,8 +168,6 @@ const Timetrack = styled.div`
 margin-top:0 !important;
   .dcd-info {
     font-size: 14px;
-    // width: 100%;
-    // margin-top:0 !important;
     @media (max-width: 1550px) {
       font-size: 12px;
     }

@@ -1643,11 +1643,7 @@ footer {
     margin-top: 20px !important;
   }
 }
-.profile-bg-card{
-  @media (max-width:576px) {
-    margin-top:20px !important;    
-  }
-}
+
 .card-padding {
   padding: 30px 0 0 0;
   @media (max-width:576px) {
@@ -1667,6 +1663,12 @@ footer {
     margin:20px !important;
   }
 }
+.font-16{
+  font-size:16px !important;
+  @media (max-width:576px) {
+    font-size: 12px !important;
+  }
+}
 .px-30{
   padding:0 30px;
   @media (max-width:576px) {
@@ -1676,5 +1678,13 @@ footer {
 .m-2{
   @media (max-width:576px) {
     margin:20px !important;
+  }
+}
+.image-upload{
+  @media (max-width:576px) {
+    width: 150px;
+  }
+  svg{
+    width: 100%;
   }
 }

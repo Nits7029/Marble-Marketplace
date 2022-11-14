@@ -1220,15 +1220,15 @@
                     </HStack>
                     <Text textAlign="right" fontSize="13px">{nft.royalty[element] / 100} %</Text>
                   </RoyaltyContainer>
-                ))}
+                ))} 
               </Stack>
               <Stack spacing={10}>
-                <Card title="Description" className="profile-bg-card">
+                <Card title="Description">
                   <Text fontSize="18px" fontWeight="400" fontFamily="Mulish">
                     {nft.description}
                   </Text>
                 </Card>
-                <Card title="Minted On" fontWeight="500" className="profile-bg-card">
+                <Card title="Minted On">
                   <Text fontSize="16px" fontWeight="400" fontFamily="Mulish">
                     {nft.createdAt}
                   </Text>
@@ -1789,10 +1789,6 @@
     objectFit: 'cover',
     objectPosition: 'center',
     zIndex: '-1',
-
-    '@media (max-width: 1024px)': {
-      height: 'calc(100vh - 153%)',
-    },
     
     '@media (max-width: 1024px)': {
       height: 'calc(100vh - 263%)',
