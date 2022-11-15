@@ -19,7 +19,8 @@ export const  StakingCardWrapper = styled(GradientBackground)`
   padding: 40px;
   width: 100%;
   border-radius: 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns:repeat(3, 1fr);
   min-height: 622px;
   height:100%;
 `

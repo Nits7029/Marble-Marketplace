@@ -29,6 +29,7 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
           color: '$black',
           stroke: '$black',
           width: '100%',
+          marginLeft: "30px !important",
         }}
         variant="primary"
         size="large"
@@ -37,19 +38,22 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
         Transfer NFT
       </Button>
       <Modal
-        blockScrollOnMount={false}
+        blockScrollOnMount={false} 
         isOpen={isOpen}
         onClose={onClose}
         isCentered
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
-        <Container>
+        <Container className="bg-border-linear">
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
           <MainWrapper>
-            <Stack spacing={10} width={isMobile() ? '100%' : '55%'}>
+            <Stack spacing={10} width="100%">
               <Stack>
                 <Title>Transfer NFT</Title>
-                <p>
+                <p style={{
+                 fontWeight:"500",
+                 maxWidth:'500px',
+                }}>
                   Transfer the NFT to another user or wallet by entering a valid
                   address below
                 </p>
@@ -67,6 +71,8 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
                   color: '$black',
                   stroke: '$black',
                   width: '100%',
+                  fontWeight: '500',
+                  height:'80px',
                 }}
                 variant="primary"
                 size="large"
@@ -88,13 +94,14 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
 }
 
 const Container = styled(ModalContent)`
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
-  padding: 70px;
+  padding:100px 80px 100px 50px;
   color: white !important;
-  overflow: hidden;
   max-width: 1320px !important;
+  max-height: 760px;
+  height:100%;
+  margin:0 !important;
   @media (max-width: 480px) {
     width: 90vw !important;
     padding: 10px;
@@ -131,9 +138,9 @@ const CardWrapper = styled.div`
   }
 `
 const StyledInput = styled.input`
-  padding: 15px;
+  padding: 20px 30px;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   background: #272734;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09);
@@ -141,7 +148,6 @@ const StyledInput = styled.input`
   /* Note: backdrop-filter has minimal browser support */
   font-family: Mulish;
   border-radius: 20px;
-  height: 70px;
 `
 const Title = styled.div`
   font-size: 30px;

@@ -33,7 +33,7 @@ export function NftCard({ nft, id, type }): JSX.Element {
 
   return (
     <NftCardDiv
-      className="nft-card"
+      className="bg-border-linear"
       color={backgroundColor[nft.saleType]}
       revertColor={nft.saleType === 'Direct Sell'}
     >
@@ -80,7 +80,7 @@ export function NftCard({ nft, id, type }): JSX.Element {
                     alt="logo"
                     size="34px"
                   />
-                  <p className={`ml-2 ${nft.saleType === 'Direct Sell' ? 'text-color': ''}`} >{profile.name || getReducedAddress(nft.owner)}</p>
+                  <p className={`ml-2 font-16 ${nft.saleType === 'Direct Sell' ? 'text-color': ''}`} >{profile.name || getReducedAddress(nft.owner)}</p>
                 </div>
 
                 {nft.saleType === 'Auction' && (
@@ -110,14 +110,10 @@ export function NftCard({ nft, id, type }): JSX.Element {
 
 const NftCardDiv = styled.div<{ color: string; revertColor: boolean }>`
   border-radius: 20px;
-  box-shadow:0px 4px 40px rgb(42 47 50 / 9%), inset -6px 3px 24px #41414e;
-  background: ${({ color }) => color};
   padding: 30px;
   height: 100%;
   width: 100%;
   cursor: pointer;
-  border:1px solid;
-  border-image-source:linear-gradient(90.65deg, #ffffff 0.82%, rgba(0, 0, 0, 0) 98.47%);
   color: ${({ revertColor }) => (revertColor ? 'black' : 'white')};
   @media (max-width: 1550px) {
     padding: 20px;

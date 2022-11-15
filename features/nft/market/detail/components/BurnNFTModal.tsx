@@ -20,7 +20,7 @@ const BurnNFTModal = ({ nftInfo, onHandle }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <ChakraProvider>
-      <BurnButton className="btn-buy btn-default" onClick={onOpen}>
+      <BurnButton className="btn-buy btn-default btn-red" onClick={onOpen}>
         Burn NFT
       </BurnButton>
       <Modal
@@ -30,19 +30,27 @@ const BurnNFTModal = ({ nftInfo, onHandle }) => {
         isCentered
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
-        <Container>
+        <Container className="bg-border-linear">
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
 
           <MainWrapper>
-            <Stack spacing={10} width={isMobile() ? '100%' : '55%'}>
+            <Stack spacing={10} width='100%'>
               <Stack>
                 <Title>Burn the NFT</Title>
-                <p>
+                <p style={{
+                 fontWeight:"500",  
+                 maxWidth:'500px',
+                }}>
                   Burning an NFT destroys the NFT and removes it from your
                   creator profile. Please note, this action cannot be reversed.
                 </p>
               </Stack>
-              <BurnButton className="btn-buy btn-default" onClick={onHandle}>
+              <BurnButton style={{
+                  fontWeight: '500',
+                  height:'80px',
+                  fontSize:'18px',
+                }}
+                className="btn-buy btn-default" onClick={onHandle}>
                 Burn the NFT
               </BurnButton>
             </Stack>
@@ -57,14 +65,14 @@ const BurnNFTModal = ({ nftInfo, onHandle }) => {
 }
 
 const Container = styled(ModalContent)`
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.02) !important; 
   border-radius: 30px !important;
-  padding: 70px;
+  padding:100px 80px 100px 50px;
   color: white !important;
-  overflow: hidden;
-  position: relative;
   max-width: 1320px !important;
+  max-height: 760px;
+  height:100%;
+  margin:0 !important;
   @media (max-width: 480px) {
     width: 90vw !important;
     padding: 10px;
@@ -75,7 +83,7 @@ const Container = styled(ModalContent)`
 `
 const Title = styled.div`
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 600;
   @media (max-width: 480px) {
     font-size: 20px;
   }

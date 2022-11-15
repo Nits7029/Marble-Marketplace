@@ -231,15 +231,15 @@ export default function NFTCreate() {
             <Stack alignItems="center" spacing="50px">
               <Stack>
                 <h1>Create on Marble Dao</h1>
-                {!agreed && !collection.count && (
-                  <p style={{ textAlign: 'center' }}>
+                {/* {!agreed && !collection.count && ( */}
+                  <p style={{ textAlign: 'center', fontSize: '18px' ,fontWeight: '400',marginTop: '10px' }}>
                     Before you mint your first NFT, Please read through and
                     agree to <br />
                     our community guidelines.
                   </p>
-                )}
+                {/* )} */}
               </Stack>
-              {agreed || collection.count > 0 ? (
+              {/* {agreed || collection.count > 0 ? ( */}
                 <MainWrapper>
                   {data.nft ? (
                     <Card>
@@ -401,7 +401,7 @@ export default function NFTCreate() {
                     </Stack>
                   </Stack>
                 </Card>
-              )}
+              {/* )} */}
             </Stack>
           </Container>
         )}
@@ -471,7 +471,6 @@ const Container = styled.div`
 `
 const Card = styled.div<{ fullWidth: boolean }>`
   padding: 40px;
-
   border-radius: 30px;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : '60%')};
   @media (max-width: 480px) {

@@ -363,7 +363,7 @@ export const Collection = ({ id }: CollectionProps) => {
             NFTs
           </Text>
 
-          {wallet.accountId === collectionInfo.creator && (
+          {/* {wallet.accountId === collectionInfo.creator && ( */}
             <Link href={`/nft/${id}/create`} passHref>
               <Button
                 className="btn-buy btn-default"
@@ -378,7 +378,7 @@ export const Collection = ({ id }: CollectionProps) => {
                 Mint NFT
               </Button>
             </Link>
-         )}
+         {/* )} */}
         </Heading>
           <InfiniteScroll
             dataLength={numTokens}

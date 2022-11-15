@@ -1097,6 +1097,7 @@
                                   color: '$black',
                                   stroke: '$black',
                                   width: '100%',
+
                                 }}
                                 size="large"
                                 onClick={handleCancelClick}
@@ -1126,10 +1127,10 @@
                     <NftBuyOfferTag className="nft-buy-offer bg-border-linear">
                       <Text className="nft-text"
                         fontSize="25px"
-                        fontWeight="700"
+                        fontWeight="500"
                         fontFamily="Mulish"
                         textAlign="center"
-                        paddingTop="10px"
+                        paddingTop="13px"
                       >
                         {nft.user === wallet.accountId
                           ? 'Manage NFT'
@@ -1539,10 +1540,10 @@
                   <NftBuyOfferTag className="nft-buy-offer bg-border-linear">
                     <Text
                       fontSize="25px"
-                      fontWeight="700"
+                      fontWeight="500"
                       fontFamily="Mulish"
                       textAlign="center"
-                      paddingTop="10px"
+                      paddingTop="13px"
                       className='nft-text'
                     >
                       {/* {nft.user === wallet.accountId */}
@@ -1714,7 +1715,7 @@
   const PriceTag = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    padding: '30px 36px',
+    padding: '25px 25px 30px ',
     ' .price-lbl': {
       color: '$colors$link',
     },
