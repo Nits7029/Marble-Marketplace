@@ -47,7 +47,7 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
         <Container className="bg-border-linear">
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
           <MainWrapper>
-            <Stack spacing={10} width="100%">
+            <Stack spacing={10}width={isMobile() ? '100%' : '55%'}>
               <Stack>
                 <Title>Transfer NFT</Title>
                 <p style={{

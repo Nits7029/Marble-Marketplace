@@ -34,7 +34,7 @@ const BurnNFTModal = ({ nftInfo, onHandle }) => {
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
 
           <MainWrapper>
-            <Stack spacing={10} width='100%'>
+            <Stack spacing={10} width={isMobile() ? '100%' : '55%'}>
               <Stack>
                 <Title>Burn the NFT</Title>
                 <p style={{
