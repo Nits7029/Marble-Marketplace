@@ -1130,7 +1130,7 @@
                         fontWeight="500"
                         fontFamily="Mulish"
                         textAlign="center"
-                        paddingTop="13px"
+                        paddingTop= {isMobile() ? '0' : '13px'}
                       >
                         {nft.user === wallet.accountId
                           ? 'Manage NFT'

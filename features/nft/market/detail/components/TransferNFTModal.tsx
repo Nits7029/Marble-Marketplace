@@ -47,7 +47,7 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
         <Container className="bg-border-linear">
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
           <MainWrapper>
-            <Stack spacing={10}width={isMobile() ? '100%' : '55%'}>
+            <Stack spacing={10} width={isMobile() ? '100%' : '55%'} className="mobile-transfer"> 
               <Stack>
                 <Title>Transfer NFT</Title>
                 <p style={{
@@ -58,14 +58,14 @@ const TransferNFTModal = ({ nftInfo, onHandle }) => {
                   address below
                 </p>
               </Stack>
-              <Stack>
+              <Stack className="my-1">
                 <StyledInput
                   onChange={(e) => setAddress(e.target.value)}
                   value={address}
                 />
               </Stack>
               <Button
-                className="btn-buy btn-default"
+                className="btn-buy btn-default btn-mobile"
                 css={{
                   background: '$white',
                   color: '$black',
@@ -105,8 +105,7 @@ const Container = styled(ModalContent)`
   @media (max-width: 480px) {
     width: 90vw !important;
     padding: 10px;
-    max-height: 100vh;
-    overflow: auto;
+    max-height: 720px;
     border-radius: 10px !important;
   }
 `
@@ -121,6 +120,7 @@ const MainWrapper = styled.div`
   }
   @media (max-width: 480px) {
     flex-direction: column-reverse;
+    padding:20px 5px;
     p {
       font-size: 14px;
     }
@@ -145,7 +145,6 @@ const StyledInput = styled.input`
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09);
   backdrop-filter: blur(40px);
-  /* Note: backdrop-filter has minimal browser support */
   font-family: Mulish;
   border-radius: 20px;
 `

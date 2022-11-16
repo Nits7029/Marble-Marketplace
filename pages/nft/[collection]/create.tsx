@@ -228,18 +228,18 @@ export default function NFTCreate() {
       <ChakraProvider>
         {wallet.accountId && (
           <Container>
-            <Stack alignItems="center" spacing="50px">
-              <Stack>
-                <h1>Create on Marble Dao</h1>
+            <Stack alignItems="center" spacing="50px" className='agreed-collection-wrap'>
+              <Stack className='create-text'>
+                <h1 textAlign="center">Create on Marble Dao</h1>
                 {/* {!agreed && !collection.count && ( */}
                   <p style={{ textAlign: 'center', fontSize: '18px' ,fontWeight: '400',marginTop: '10px' }}>
                     Before you mint your first NFT, Please read through and
-                    agree to <br />
+                    agree to
                     our community guidelines.
                   </p>
                 {/* )} */}
               </Stack>
-              {/* {agreed || collection.count > 0 ? ( */}
+              {agreed || collection.count > 0 ? (
                 <MainWrapper>
                   {data.nft ? (
                     <Card>
@@ -330,12 +330,13 @@ export default function NFTCreate() {
                   )}
                 </MainWrapper>
               ) : (
-                <Card className="bg-border-linear">
+                <Card className="bg-border-linear Summary-card">
                   <Stack spacing="70px">
-                    <h2>Here&apos;s a Summary</h2>
-                    <Stack>
+                    <h2 className="head-mb">Here&apos;s a Summary</h2>
+                    
+                    <Stack className='mt-0 summary-stack'>
                       <HStack>
-                        <Checkbox
+                        <Checkbox className="create-checkbox"
                           checked={original}
                           onChange={(e) => {
                             setOriginal(!original)
@@ -343,42 +344,44 @@ export default function NFTCreate() {
                         />
                         <h3>Be Original</h3>
                       </HStack>
-                      <Text>
+                      <Text className="font-16">
                         Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry.{' '}
                       </Text>
                     </Stack>
-                    <Stack>
+                    <Stack className='summary-stack'>
                       <HStack>
-                        <Checkbox
+                        <Checkbox className="create-checkbox"
                           checked={kind}
                           onChange={(e) => setKind(!kind)}
                         />
                         <h3>Be Kind and Inclusive</h3>
                       </HStack>
-                      <Text>
+                      <Text className="font-16">
                         Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry.{' '}
                       </Text>
                     </Stack>
-                    <Stack>
+                    <Stack className='summary-stack'>
                       <HStack>
-                        <Checkbox
+                        <Checkbox className="create-checkbox"
                           checked={creative}
                           onChange={(e) => setCreative(!creative)}
                         />
                         <h3>Be Creative And Have Fun</h3>
                       </HStack>
-                      <Text>
+                      <Text className="font-16">
                         Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry.{' '}
                       </Text>
                     </Stack>
                   </Stack>
+
                   <Divider />
-                  <Stack spacing="50px" padding="0 150px">
+
+                  <Stack spacing="50px" padding="0 150px" className="guide-col">
                     <a>Read our full community guidelines here</a>
-                    <Stack>
+                    <Stack className='btn-mobile'>
                       {error && (
                         <p style={{ color: 'red' }}>
                           Please select all conditions
@@ -391,6 +394,7 @@ export default function NFTCreate() {
                           color: '$black',
                           stroke: '$black',
                           width: '100%',
+                          fontWeight:'500'
                         }}
                         variant="primary"
                         size="large"
@@ -401,7 +405,7 @@ export default function NFTCreate() {
                     </Stack>
                   </Stack>
                 </Card>
-              {/* )} */}
+              )}
             </Stack>
           </Container>
         )}
@@ -412,13 +416,17 @@ export default function NFTCreate() {
 
 const Text = styled.div`
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 300;
   padding: 0 40px;
 `
 const Divider = styled.div`
   height: 0px;
   border: 1px solid #363b4e;
   margin: 60px 0;
+
+  @media (max-width:576px){
+    margin: 60px 0 30px;
+  }
 `
 const Container = styled.div`
   padding: 70px;
@@ -436,16 +444,16 @@ const Container = styled.div`
   }
   h2 {
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 400;
     text-align: center;
   }
   h3 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 400;
   }
   a {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 400;
     text-align: center;
     text-decoration-line: underline;
     font-family: Mulish;
@@ -470,9 +478,10 @@ const Container = styled.div`
   }
 `
 const Card = styled.div<{ fullWidth: boolean }>`
-  padding: 40px;
+  padding: 45px 60px;
   border-radius: 30px;
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : '60%')};
+  width: 100%;
+  
   @media (max-width: 480px) {
     width: 100%;
     padding: 20px;
@@ -563,11 +572,10 @@ const Image = styled.img`
 `
 const MainWrapper = styled.div`
   display: flex;
-  aling-items: start;
+  align-items: center;
   column-gap: 40px;
   justify-content: space-between;
   width:1000px;
-
 
   @media (max-width: 1200px) {
     width: 760px !important;
@@ -587,6 +595,9 @@ const MainWrapper = styled.div`
     width: 100% !important;
     padding: 20px;
     margin-top:0 !important;
+    @media (max-width:576px){
+      padding:0 !important;
+    }
   }
   
 

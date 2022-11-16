@@ -150,4 +150,10 @@ export const StyledCloseIcon = styled(CloseIcon)`
   right: 0%;
   top: 0%;
   transform:translate(50% , -50%);
+  @media (max-width:576px){
+    width:30px;
+    height:30px;
+    transform:translate(20% , 0%);
+    z-index:99;
+  }
 `

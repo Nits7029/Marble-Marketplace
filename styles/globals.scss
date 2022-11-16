@@ -1442,6 +1442,9 @@ footer {
 .ml-3 {
   margin-left: 12px !important;
 }
+.mt-0{
+  margin-top: 0 !important;
+}
 
 .nft-stack {
   @media (max-width:480px) {
@@ -1697,11 +1700,99 @@ footer {
     margin:20px !important;
   }
 }
+.my-1{
+  margin: 10px 0 !important;
+}
 .image-upload{
   @media (max-width:576px) {
     width: 150px;
   }
   svg{
     width: 100%;
+  }
+}
+.mobile-transfer{
+  @media (max-width:576px) {
+    width: 100% !important;
+  }
+}
+.btn-mobile{
+  @media (max-width:576px) {
+    height: 50px !important;
+    margin-top: 10px !important;
+  }
+}
+.head-mb{
+  margin-bottom: 44px;
+  @media (max-width:576px) {
+    margin-bottom: 25px;
+  }
+}
+.create-checkbox {
+  background-color: transparent !important;
+  margin-right: 15px;
+  &:checked:after{
+    border-color:#fff !important;
+  }
+  @media (max-width:576px) {
+    width: 27px !important;
+    height: 27px !important;
+    margin-right: 0 !important;
+  }
+}
+.Summary-card{
+  @media (max-width:576px) {
+    margin: 0 10px !important;
+  }
+  .mt-0{
+    @media (max-width:576px) {
+      margin-top: 0 !important;
+    }
+  }
+  .font-16{
+    padding: 0 50px;
+    @media (max-width:576px) {
+      padding: 0 33px;
+    }
+  }
+}
+.agreed-collection-wrap{
+  @media (max-width:576px) {
+    padding: 0 30px;
+  }
+}
+.create-text{
+  h1{
+    @media (max-width:576px) {
+      text-align: center;
+    }
+  
+  }
+  p{
+    max-width: 530px;
+    @media (max-width:576px) {
+      font-size: 14px !important;
+      max-width: 350px;
+    }
+  }
+}
+.summary-stack{
+  @media (max-width:576px) {
+    margin-top: 40px !important;
+  }
+}
+.guide-col{
+  @media (max-width:576px) {
+    padding: 0 20px !important;
+  }
+  a{
+    @media (max-width:576px) {
+      font-size: 14px !important;
+    }
+  }
+  .btn-mobile{
+    @media (max-width:576px) {
+      margin-top: 30px !important;
+    }
   }
 }
