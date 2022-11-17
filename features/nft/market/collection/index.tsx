@@ -176,7 +176,7 @@ export const Collection = ({ id }: CollectionProps) => {
     return collectionNFTs
   }, [id])
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (id === undefined || id == '[name]') return false
       try {
         const num = await nftViewFunction({
@@ -195,7 +195,7 @@ export const Collection = ({ id }: CollectionProps) => {
     })()
   }, [id])
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (id === undefined || id == '[name]') return false
 
       const tokensInfo = await fetchTokensInfo()
@@ -354,16 +354,16 @@ export const Collection = ({ id }: CollectionProps) => {
             </ProfileLogo>
           </Stack>
         </Banner>
-      
+
         <NftList
           className={`${isCollapse ? 'collapse-close' : 'collapse-open'}`}
         >
-            <Heading>
-          <Text fontSize={isMobile() ? '24px' : '46px'} fontWeight="600">
-            NFTs
-          </Text>
+          <Heading>
+            <Text fontSize={isMobile() ? '24px' : '46px'} fontWeight="600">
+              NFTs
+            </Text>
 
-          {/* {wallet.accountId === collectionInfo.creator && ( */}
+            {/* {wallet.accountId === collectionInfo.creator && ( */}
             <Link href={`/nft/${id}/create`} passHref>
               <Button
                 className="btn-buy btn-default"
@@ -371,6 +371,7 @@ export const Collection = ({ id }: CollectionProps) => {
                   background: '$white',
                   color: '$black',
                   stroke: '$black',
+                  fontWeight: '500',
                 }}
                 variant="primary"
                 size="large"
@@ -378,9 +379,10 @@ export const Collection = ({ id }: CollectionProps) => {
                 Mint NFT
               </Button>
             </Link>
-         {/* )} */}
-        </Heading>
-          <InfiniteScroll
+            {/* )} */}
+          </Heading>
+
+          <InfiniteScroll className="infinite-border"
             dataLength={numTokens}
             next={getMoreNfts}
             hasMore={false}
@@ -407,12 +409,12 @@ export const Collection = ({ id }: CollectionProps) => {
               spacing="50px"
               width="50%"
               alignItems="center"
-              margin="0 auto"
+              margin="0 auto"  className="nft-list-col"
             >
-              <Text fontSize="30px" fontWeight="400">
+              <Text fontSize="30px" fontWeight="500">
                 Customize Your Collection
               </Text>
-              <Text fontSize="18px" fontWeight="600">
+              <Text fontSize="18px" fontWeight="400" className='text-margin text-center'>
                 Before you mint an NFT to your collection, customize it by
                 uploading <br /> a logo, cover image and description
               </Text>

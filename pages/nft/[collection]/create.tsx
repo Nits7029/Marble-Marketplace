@@ -217,7 +217,7 @@ export default function NFTCreate() {
   }
   const UploadImage = () => {
     return (
-      <Stack padding={isMobile() ? '0' : '0 100px'} spacing="40px">
+      <Stack padding={isMobile() ? '0' : '0 100px'} spacing="40px" className='upload-contain'>
         {<h2  style={{fontWeight:"400"}} >Upload A Media File</h2>}
         <NFTUpload data={data} dispatch={dispatch} item="nft-create" />
       </Stack>
@@ -230,24 +230,24 @@ export default function NFTCreate() {
           <Container>
             <Stack alignItems="center" spacing="50px" className='agreed-collection-wrap'>
               <Stack className='create-text'>
-                <h1 textAlign="center">Create on Marble Dao</h1>
-                {/* {!agreed && !collection.count && ( */}
+                <h1 className='text-center'>Create on Marble Dao</h1>
+                {!agreed && !collection.count && (
                   <p style={{ textAlign: 'center', fontSize: '18px' ,fontWeight: '400',marginTop: '10px' }}>
                     Before you mint your first NFT, Please read through and
                     agree to
                     our community guidelines.
                   </p>
-                {/* )} */}
+                 )}
               </Stack>
               {agreed || collection.count > 0 ? (
-                <MainWrapper>
+                <MainWrapper className="mint-nft-wrap">
                   {data.nft ? (
-                    <Card>
+                    <Card className="bg-border-linear mint-uploaded">
                       <Stack spacing="40px">
                         <h2>Mint An NFT</h2>
                         <Stack>
                           <h3>Add Details</h3>
-                          <p>
+                          <p style={{fontSize: '16px' ,fontWeight: '400' ,maxWidth:'630px' ,marginTop: '10px' }} className="text-sm">
                             Once your NFT is minted to the Marble blockchain,
                             you will not be able to edit or update any of this
                             information.
@@ -266,9 +266,10 @@ export default function NFTCreate() {
                         <Stack>
                           <Text>Description</Text>
                           <Input
+                             placeholder="Description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            maxLength="1000"
+                            maxLength="1000" className="description"
                           />
                           <Footer>
                             <div>Use markdown syntax to embed links</div>
@@ -277,7 +278,7 @@ export default function NFTCreate() {
                         </Stack>
                         <Stack>
                           <h3>Collections</h3>
-                          <CollectionCard>
+                          <CollectionCard className="bg-border-linear">
                             <RoundedIcon
                               size="70px"
                               src={collection.media}
@@ -291,13 +292,14 @@ export default function NFTCreate() {
                         </Stack>
                         <Stack padding={isMobile() ? '0' : '0 150px'}>
                           <Button
-                            className="btn-buy btn-default"
+                            className="btn-buy btn-default btn-mobile"
                             css={{
                               background: '$white',
                               color: '$black',
                               stroke: '$black',
                               width: '100%',
                               marginTop: '20px',
+                              fontWeight: '500'
                             }}
                             variant="primary"
                             size="large"
@@ -314,8 +316,8 @@ export default function NFTCreate() {
                     </Card>
                   )}
                   {data.nft && (
-                    <NFTContainer>
-                      <Stack spacing="20px">
+                    <NFTContainer className="bg-border-linear nft-container">
+                      <Stack spacing="20px" >
                         <ImgDiv className="nft-img-url">
                           <Image
                             src={process.env.NEXT_PUBLIC_PINATA_URL + data.nft}
@@ -330,7 +332,7 @@ export default function NFTCreate() {
                   )}
                 </MainWrapper>
               ) : (
-                <Card className="bg-border-linear Summary-card">
+                <Card className="bg-border-linear summary-card">
                   <Stack spacing="70px">
                     <h2 className="head-mb">Here&apos;s a Summary</h2>
                     
@@ -405,7 +407,7 @@ export default function NFTCreate() {
                     </Stack>
                   </Stack>
                 </Card>
-              )}
+              )} 
             </Stack>
           </Container>
         )}
@@ -417,7 +419,7 @@ export default function NFTCreate() {
 const Text = styled.div`
   font-size: 14px;
   font-weight: 300;
-  padding: 0 40px;
+  padding: 0 30px;
 `
 const Divider = styled.div`
   height: 0px;
@@ -429,7 +431,7 @@ const Divider = styled.div`
   }
 `
 const Container = styled.div`
-  padding: 70px;
+  padding: 70px 0;
   p {
     font-size: 14px;
     font-family: Mulish;
@@ -480,11 +482,14 @@ const Container = styled.div`
 const Card = styled.div<{ fullWidth: boolean }>`
   padding: 45px 60px;
   border-radius: 30px;
-  width: 100%;
+  max-width: 1000px;
+  margin:0 auto;
+  width:100%;
   
   @media (max-width: 480px) {
-    width: 100%;
+    width: 100% !important;
     padding: 20px;
+    margin:0 !important;
   }
 `
 const StyledInput = styled.input`
@@ -493,7 +498,7 @@ const StyledInput = styled.input`
   box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09);
   backdrop-filter: blur(40px);
   border-radius: 20px;
-  padding: 20px;
+  padding: 20px 30px;
   font-size: 20px;
   font-family: Mulish;
   @media (max-width: 480px) {
@@ -519,17 +524,7 @@ const Footer = styled.div`
   }
 `
 const CollectionCard = styled.div`
-  background: linear-gradient(0deg, #050616, #050616) padding-box,
-    linear-gradient(90.65deg, #ffffff 0.82%, rgba(0, 0, 0, 0) 98.47%) border-box;
-  box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6d6d78;
-  backdrop-filter: blur(40px);
   border-radius: 20px;
-  border: 1px solid;
-  border-image-source: linear-gradient(
-    90.65deg,
-    #ffffff 0.82%,
-    rgba(0, 0, 0, 0) 98.47%
-  );
   padding: 25px;
   display: flex;
   align-items: center;
@@ -537,17 +532,10 @@ const CollectionCard = styled.div`
 `
 const NFTContainer = styled.div`
   width: 35%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 35%;
   padding: 25px;
   border-radius: 30px;
   backdrop-filter: blur(30px);
-  box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
-    inset 0px 14px 24px rgba(17, 20, 29, 0.4);
   @media (max-width: 480px) {
     width: 100%;
   }
@@ -572,7 +560,6 @@ const Image = styled.img`
 `
 const MainWrapper = styled.div`
   display: flex;
-  align-items: center;
   column-gap: 40px;
   justify-content: space-between;
   width:1000px;
@@ -583,7 +570,7 @@ const MainWrapper = styled.div`
   }
 
   @media (max-width: 876px) {
-    width: 560px !important;
+    width: 100% !important;
     padding: 20px;
     margin-top:30px;
   }
