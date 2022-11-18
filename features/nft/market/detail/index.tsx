@@ -814,6 +814,7 @@
         console.log('buy-update-bid Error: ', error)
       }
     }
+
     return (
       <ChakraProvider>
         <Stack>
@@ -1056,7 +1057,7 @@
                                 )}
                             </ButtonGroup>
                           </>
-                        ) : marketStatus.data.is_auction ? (
+                        ) : marketStatus.data.is_auction  ? (
                           <Stack
                             direction={isMobile() ? 'column' : 'row'}
                             alignItems="flex-end"
@@ -1088,7 +1089,7 @@
                                   }}
                                 />
                               </Stack>
-                            )}
+                             )} 
                             {isBidder && (
                               <Button
                                 className="btn-buy btn-default"
@@ -1472,8 +1473,9 @@
                           </ButtonGroup>
                         </>
                       ) : marketStatus.data.is_auction ? (
-                        <Stack direction="row" alignItems="flex-end">
-                          {marketStatus.isStarted && !marketStatus.isEnded && (
+                        <Stack direction="row" alignItems="flex-end" justifyContent="center">
+                          {console.log("called vmn")}
+                          {/* {marketStatus.isStarted && !marketStatus.isEnded && ( */}
                             <Stack
                               paddingTop={10}
                               width={isMobile() ? '100%' : '50%'}
@@ -1502,7 +1504,7 @@
                                 }}
                               />
                             </Stack>
-                          )}
+                        {/* )} */}
                           {isBidder && (
                             <Button
                               className="btn-buy btn-default"
@@ -1546,13 +1548,11 @@
                       paddingTop="13px"
                       className='nft-text'
                     >
-                      {/* {nft.user === wallet.accountId */}
-                      {true
+                      {nft.user === wallet.accountId
                         ? 'Manage NFT'
                         : 'This is not for a sale'}
                     </Text>
-                    {/* {nft.user === wallet.accountId && ( */}
-                    {true && (
+                    {nft.user === wallet.accountId && (
                       <PriceTag>
                         <Stack direction="row" spacing={4} marginTop="20px">
                           <OnSaleModal
@@ -1618,14 +1618,12 @@
                   </NftBuyOfferTag>
                 )}
                 {marketStatus.data && marketStatus.data.bids && (
-                // {true && (
                   <Card title="Bid History">
                     <SimpleTable
                       data={marketStatus.data.bids}
                       unit={tokenInfo?.decimals}
                       paymentToken={tokenInfo?.symbol}
                     />
-                    {/* <p>hello</p> */}
                   </Card>
                 )}
               </NftInfoTag>

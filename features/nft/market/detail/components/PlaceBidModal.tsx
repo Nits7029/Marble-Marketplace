@@ -28,13 +28,12 @@ const PlaceBidModal = ({
   const { isOpen, onOpen, onClose } = useDisclosure()
   const TokenLogo = () => {
     return (
-      <TokenLogoWrapper>
+      <TokenLogoWrapper className="token-logo-wrapper">
         <img src={tokenInfo?.logoURI} alt="token" width="35px" />
-        <Text>{tokenInfo?.name}</Text>
+        <Text className='font-16'>{tokenInfo?.name}</Text>
       </TokenLogoWrapper>
     )
   }
-  console.log('nftINfo: ', nftInfo)
   return (
     <ChakraProvider>
       <Button
@@ -58,7 +57,7 @@ const PlaceBidModal = ({
         isCentered
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
-        <Container>
+        <Container className="bg-border-linear">
           <MainWrapper>
             <Stack spacing={10}>
               <Stack>
@@ -84,14 +83,13 @@ const PlaceBidModal = ({
                     onChange={onChange}
                     value={price}
                   />
+
                   <StyledInputRightElement>
                     <TokenLogo />
                   </StyledInputRightElement>
                 </InputGroup>
                 <Stack
-                  justifyContent="space-between"
-                  flexDirection={isMobile() ? 'row' : 'column'}
-                  alignItems="center"
+                  flexDirection={isMobile() ? 'row' : 'column'} className="token-available"
                 >
                   <h1>Available Balance</h1>
                   <h1>
@@ -133,12 +131,10 @@ const PlaceBidModal = ({
 }
 
 const Container = styled(ModalContent)`
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
   padding: 70px;
   color: white !important;
-  overflow: hidden;
   max-width: 1320px !important;
   @media (max-width: 480px) {
     width: 90vw !important;
@@ -185,7 +181,7 @@ const StyledInput = styled(Input)`
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 15px;
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 400;
   background: #272734;
   border-radius: 20px !important;
   display: flex;
@@ -196,7 +192,7 @@ const StyledInput = styled(Input)`
 const TokenLogoWrapper = styled.div`
   background: rgba(0, 0, 0, 0.2);
   border-radius: 60px;
-  padding: 10px 20px 10px 10px;
+  padding: 5px 20px 5px 10px;
   display: flex;
   align-items: center;
 `
@@ -204,11 +200,12 @@ const TokenLogoWrapper = styled.div`
 const StyledInputRightElement = styled.div`
   position: absolute;
   right: 30px;
-  top: 8px;
+  top: 50%;
+  transform:translateY(-50%);
 `
 const Title = styled.div`
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 500;
   @media (max-width: 480px) {
     font-size: 20px;
   }

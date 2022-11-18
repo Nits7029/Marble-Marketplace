@@ -202,6 +202,7 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
       background: '#272734',
       color: '#FFFFFF',
       width: '100%',
+      paddingLeft: '20px',
     }),
     menuList: (base, state) => ({
       ...base,
@@ -236,12 +237,14 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
   return (
     <ChakraProvider>
       <Button
-        className="btn-buy btn-default"
+        className="btn-buy btn-default mobile-btn"
         css={{
           background: '$white',
           color: '$black',
           stroke: '$black',
           width: '100%',
+          fontWeight:'500',
+          marginBottom: '50px',
         }}
         variant="primary"
         onClick={onOpen}
@@ -255,7 +258,7 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
         isCentered
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
-        <Container>
+        <Container className="bg-border-linear">
           <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
           <ModalWrapper>
             <Stack spacing="40px">
@@ -281,7 +284,7 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
                 <Input
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  maxLength="1000"
+                  maxLength="1000" className="description" placeholder="Test"
                 />
                 <Footer>
                   <div>Use markdown syntax to embed links</div>
@@ -314,11 +317,13 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
                     color: '$black',
                     stroke: '$black',
                     width: '100%',
+                    fontWeight: '500',
                   }}
                   variant="primary"
                   size="large"
                   onClick={handleChange}
                   disabled={isJsonUploading}
+                 
                 >
                   Save Changes
                 </Button>
@@ -332,8 +337,8 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
 }
 
 const Container = styled(ModalContent)`
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  // border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
   padding: 30px;
   color: white !important;
@@ -380,7 +385,7 @@ const Title = styled.div`
 
 const Text = styled.div`
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   padding: 0 40px;
   @media (max-width: 480px) {
     font-size: 12px;

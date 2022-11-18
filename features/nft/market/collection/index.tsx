@@ -404,10 +404,10 @@ export const Collection = ({ id }: CollectionProps) => {
           >
             <NftTable data={nfts} id={id} type="buy" />
           </InfiniteScroll>
+          
           {nfts.length === 0 && wallet.accountId === collectionInfo.creator && (
             <Stack
               spacing="50px"
-              width="50%"
               alignItems="center"
               margin="0 auto"  className="nft-list-col"
             >
@@ -439,8 +439,8 @@ const CollectionWrapper = styled.div`
 const Heading = styled.div`
   display: flex;
   justify-content: space-between;
-
   align-items: center;
+  padding: 50px 50px 0;
   @media (max-width: 480px) {
     padding: 0px;
   }
@@ -448,7 +448,6 @@ const Heading = styled.div`
 const LogoTitle = styled.div`
   font-size: 95px;
   font-weight: 900;
-  margin:39px 0 100px !important;
   
   @media (max-width: 1550px) {
     font-size: 72px;
@@ -543,7 +542,7 @@ const SelectOption = styled.div<{ isActive: boolean }>`
 const TabWrapper = styled.div``
 
 const NftList = styled.div`
-  padding: 49px 49px 0px;
+  padding: 50px 50px 0px;
   @media (max-width: 480px) {
     padding: 20px;
     width: 100%;
