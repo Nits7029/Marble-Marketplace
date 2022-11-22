@@ -296,6 +296,7 @@ div {
 
   .fullWidth {
     &.main-section {
+      min-width: 1530px;
       max-width: 1530px;
       margin: 0 auto;
 
@@ -1207,6 +1208,9 @@ div {
 .text-bold {
   font-weight: bold;
 }
+.fw-400{
+  font-weight: 400;
+}
 
 .text-gray {
   color: #666;
@@ -1971,4 +1975,18 @@ footer {
 }
 .token-available{
   margin: 30px 0 80px !important;
+  @media (max-width:1024px) {
+    margin: 30px 0 10px !important;
+  }
 }
+.place-bid-col{
+  width: 53%;
+  @media (max-width:1040px) {
+    width: 100%;
+  }
+}
+// .enter-amt{
+//   &:focus{
+//     border: transparent;
+//   }
+// }

@@ -16,6 +16,8 @@ import { Button } from 'components/Button'
 import styled from 'styled-components'
 import { NftCard } from 'components/NFT/nft-card'
 import { isMobile } from 'util/device'
+import { StyledCloseIcon } from 'components/Dialog'
+
 
 const PlaceBidModal = ({
   tokenInfo,
@@ -43,6 +45,7 @@ const PlaceBidModal = ({
           color: '$black',
           stroke: '$black',
           width: '100%',
+          fontWeight:'500',
         }}
         variant="primary"
         size="large"
@@ -58,8 +61,9 @@ const PlaceBidModal = ({
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
         <Container className="bg-border-linear">
+          <StyledCloseIcon onClick={onClose} offset={20} size="40px" />
           <MainWrapper>
-            <Stack spacing={10}>
+            <Stack spacing={10} className="place-bid-col">
               <Stack>
                 <Title>Place a Bid</Title>
                 <p>
@@ -82,6 +86,7 @@ const PlaceBidModal = ({
                     type="number"
                     onChange={onChange}
                     value={price}
+                    className="enter-amt"
                   />
 
                   <StyledInputRightElement>
@@ -89,9 +94,9 @@ const PlaceBidModal = ({
                   </StyledInputRightElement>
                 </InputGroup>
                 <Stack
-                  flexDirection={isMobile() ? 'row' : 'column'} className="token-available"
+                  flexDirection={isMobile() ? 'row' : 'column'} css={{justifyContent:"space-between"}}className="token-available"
                 >
-                  <h1>Available Balance</h1>
+                  <h1 className='fw-400'>Available Balance</h1>
                   <h1>
                     {tokenBalance.toFixed(2)}&nbsp;
                     {tokenInfo?.name}
@@ -100,12 +105,13 @@ const PlaceBidModal = ({
               </Stack>
 
               <Button
-                className="btn-buy btn-default"
+                className="btn-buy btn-default btn-mobile"
                 css={{
                   background: '$white',
                   color: '$black',
                   stroke: '$black',
                   width: '100%',
+                  fontWeight:'500',
                 }}
                 variant="primary"
                 size="large"
@@ -121,7 +127,7 @@ const PlaceBidModal = ({
               </Button>
             </Stack>
             <CardWrapper>
-              <NftCard nft={nftInfo} id="" type="" />
+              <NftCard nft={nftInfo} id="" type=""/>
             </CardWrapper>
           </MainWrapper>
         </Container>
@@ -133,22 +139,25 @@ const PlaceBidModal = ({
 const Container = styled(ModalContent)`
   background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
-  padding: 70px;
+  padding:100px 80px 100px 80px !important;
   color: white !important;
   max-width: 1320px !important;
+  max-height: 760px;
+  height:100%;
+  margin:0 !important;
   @media (max-width: 480px) {
     width: 90vw !important;
-    padding: 10px;
-    max-height: 100vh;
-    overflow: auto;
+    padding: 10px !important;
+    max-height: 720px;
     border-radius: 10px !important;
   }
 `
 const MainWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: start;
   column-gap: 30px;
+  overflow:auto;
   p {
     font-size: 20px;
     font-family: Mulish;
@@ -178,7 +187,7 @@ const CardWrapper = styled.div`
   }
 `
 const StyledInput = styled(Input)`
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   padding: 15px;
   font-size: 30px;
   font-weight: 400;
@@ -187,6 +196,9 @@ const StyledInput = styled(Input)`
   display: flex;
   align-items: center;
   height: 70px !important;
+  &:focus{
+    box-shadow:none !important;
+  }
 `
 
 const TokenLogoWrapper = styled.div`
