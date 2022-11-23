@@ -1130,7 +1130,7 @@ export const NFTDetail = ({ collectionId, id }) => {
                       fontWeight="500"
                       fontFamily="Mulish"
                       textAlign="center"
-                      paddingTop={isMobile() ? '0' : '13px'}
+                      paddingTop={true ? '13px' : '0'}
                     >
                       {nft.user === wallet.accountId
                         ? 'Manage NFT'
@@ -1543,7 +1543,7 @@ export const NFTDetail = ({ collectionId, id }) => {
                     fontWeight="500"
                     fontFamily="Mulish"
                     textAlign="center"
-                    paddingTop={isMobile() ? '0' : '13px'}
+                    paddingTop={true ? '13px' : '0'}
                     className='nft-text'
                   >
                     {nft.user === wallet.accountId

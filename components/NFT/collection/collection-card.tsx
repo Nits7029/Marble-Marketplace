@@ -32,6 +32,8 @@ const CollectionDiv = styled.div`
   padding: 30px;
   height: 100%;
   cursor: pointer;
+  min-width: 406px;
+  width: 100%;
   @media (max-width: 1450px) {
     padding: 15px;
   }
@@ -63,6 +65,7 @@ const Logo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
   border-radius: 50%;
+  object-fit:cover;
 `
 const Title = styled.div`
   font-size: 24px;

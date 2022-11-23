@@ -302,28 +302,30 @@ const Staking = () => {
         <CollectionContent>
           <h1>{collection.name}</h1>
           <StakingInfoContainer>
-            <InfoContent>
-              <h2>Daily Rewards</h2>
-              <h3>
-                {getDailyRewards()}
-                Block/Day
-              </h3>
-            </InfoContent>
-            <InfoContent>
-              <h2>Claimable Reward</h2>
-              <h3>{getClaimableReward()} Block</h3>
-            </InfoContent>
-            <InfoContent>
-              <h2>Total Staked</h2>
-              <h3>
-                {userStakeInfo.token_ids.length}/
-                {ownedNfts.length + userStakeInfo.token_ids.length}
-              </h3>
-            </InfoContent>
-            <InfoContent>
-              <h2>Days Left</h2>
-              <h3>9</h3>
-            </InfoContent>
+              <InfoContent>
+                <h2>Daily Rewards</h2>
+                <h3>
+                  {getDailyRewards()}
+                  Block/Day
+                </h3>
+              </InfoContent>
+              <InfoContent>
+                <h2>Claimable Reward</h2>
+                <h3>{getClaimableReward()} Block</h3>
+              </InfoContent>
+            </StakingInfoContainer>
+            <StakingInfoContainer>
+              <InfoContent>
+                <h2>Total Staked</h2>
+                <h3>
+                  {userStakeInfo.token_ids.length}/
+                  {ownedNfts.length + userStakeInfo.token_ids.length}
+                </h3>
+              </InfoContent>
+              <InfoContent>
+                <h2>Days Left</h2>
+                <h3>9</h3>
+              </InfoContent>
           </StakingInfoContainer>
           {userStakeInfo.create_unstake_timestamp !== 0 && (
             <CountDownWrapper>
@@ -342,12 +344,14 @@ const Staking = () => {
           <ButtonWrapper>
             {userStakeInfo.create_unstake_timestamp === 0 && (
               <Button
-                className="btn-buy btn-default"
+                className="btn-buy btn-default mobile-btn"
                 css={{
                   background: '$white',
                   color: '$black',
                   stroke: '$black',
                   padding: '15px auto',
+                  fontWeight:"500",
+                  width: "230px",
                 }}
                 disabled={ownedNfts.length === 0}
                 onClick={handleStake}
@@ -356,12 +360,14 @@ const Staking = () => {
               </Button>
             )}
             <Button
-              className="btn-buy btn-default"
+              className="btn-buy btn-default mobile-btn"
               css={{
                 background: '$white',
                 color: '$black',
                 stroke: '$black',
                 padding: '15px auto',
+                fontWeight:"500",
+                width: "230px",
               }}
               disabled={
                 userStakeInfo.create_unstake_timestamp + stakeConfig.lock_time >
@@ -374,12 +380,14 @@ const Staking = () => {
                 : 'Fetch Nft'}
             </Button>
             <Button
-              className="btn-buy btn-default"
+              className="btn-buy btn-default mobile-btn"
               css={{
                 background: '$white',
                 color: '$black',
                 stroke: '$black',
                 padding: '15px auto',
+                fontWeight:"500",
+                width: "230px",
               }}
               disabled={getClaimableReward() === 0}
               onClick={handleClaim}

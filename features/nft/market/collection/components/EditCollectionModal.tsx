@@ -337,13 +337,12 @@ const EditCollectionModal = ({ collectionInfo, category, setCategory }) => {
 }
 
 const Container = styled(ModalContent)`
-  // border: 1px solid rgba(255, 255, 255, 0.2) !important;
   background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
   padding: 30px;
   color: white !important;
   max-width: 900px !important;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     max-width: 90vw !important;
     padding: 5px;
   }

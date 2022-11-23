@@ -20,7 +20,6 @@ export const  StakingCardWrapper = styled(GradientBackground)`
   width: 100%;
   border-radius: 20px;
   display: flex;
-  // grid-template-columns:repeat(3, 1fr);
   min-height: 622px;
   height:100%;
 `
@@ -28,29 +27,33 @@ export const CollectionCardWrapper = styled.div``
 
 export const CollectionContent = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  padding-left: 30px;
+  flex-direction: column;
+  padding-left: 70px;
+  width: 100%;
   h1 {
     font-size: 42px;
-    font-weight: 700;
+    font-weight: 600;
   }
 `
 
 export const StakingInfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   row-gap: 20px;
+  display:flex;
+  flex-wrap:wrap;
 `
 export const InfoContent = styled.div`
+max-width:50%;
+flex-basis: 50%;
   h2 {
     font-size: 28px;
-    font-weight: 700;
+    font-weight: 500;
   }
   h3 {
     font-size: 26px;
-    font-weight: 700;
+    font-weight: 500;
     opacity: 0.5;
+    margin-top:10px;
   }
 `
 

@@ -303,6 +303,7 @@ div {
       // width: 100%;
       @media (max-width:1440px) {
         max-width: 1330px;
+        min-width: 100%;
         margin: 0 auto;
         padding: 0 40px;
       }
@@ -1803,8 +1804,12 @@ footer {
 }
 
 .mobile-transfer {
-  @media (max-width:576px) {
+  @media (max-width:1024px) {
     width: 100% !important;
+    padding-bottom:140px;
+  }
+  @media (max-width: 576px) {
+    padding-bottom: 50px;
   }
 }
 

@@ -94,7 +94,7 @@ const OnSaleModal = ({
   return (
     <ChakraProvider>
       <Button
-        className="btn-buy btn-default"
+        className="btn-buy btn-default mobile-btn"
         css={{
           background: '$white',
           color: '$black',
