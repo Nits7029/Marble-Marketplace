@@ -128,8 +128,8 @@ const CloseIcon = (props) => (
 
   <svg {...props} width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="22" cy="22" r="22" fill="white"/>
-    <path d="M17.8516 25.9497L27.7511 16.0502" stroke="#292D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
-    <path d="M27.7511 25.9497L17.8516 16.0502" stroke="#292D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
+    <path d="M17.8516 25.9497L27.7511 16.0502" stroke="#292D32" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="currentColor"/>
+    <path d="M27.7511 25.9497L17.8516 16.0502" stroke="#292D32" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="currentColor"/>
   </svg>
   
 )
