@@ -1683,26 +1683,26 @@ const NftInfoTag = styled('div', {
   },
 })
 
-const NftBuyOfferTag = styled('div', {
-  borderRadius: '30px',
-  height: '100%',
-  marginBottom: '20px',
+// const NftBuyOfferTag = styled('div', {
+//   borderRadius: '30px',
+//   height: '100%',
+//   marginBottom: '20px',
 
-  '@media (max-width: 1024px)': {
-    marginTop: '40px',
-  },
+//   '@media (max-width: 1024px)': {
+//     marginTop: '40px',
+//   },
 
-  '@media (max-width: 576px)': {
-    marginTop: '20px',
-  },
+//   '@media (max-width: 576px)': {
+//     marginTop: '20px',
+//   },
 
-  '@media (max-width: 480px)': {
-    padding: '10px 0',
-    background: 'rgba(5,6,21,0.2)',
-    boxShadow:
-      '0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6D6D78',
-  },
-})
+//   '@media (max-width: 480px)': {
+//     padding: '10px 0',
+//     background: 'rgba(5,6,21,0.2)',
+//     boxShadow:
+//       '0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6D6D78',
+//   },
+// })
 const NftSale = styled('div', {
   display: 'flex',
   padding: '30px 36px',

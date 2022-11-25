@@ -169,6 +169,7 @@ const Container = styled(SecondGradientBackground)`
   margin: 10px 0;
   padding: 30px 0 20px 0;
   height: 100%;
+  width:100%;
   @media (max-width: 650px) {
     padding: 10px 0 10px 0;
   }
@@ -214,7 +215,7 @@ const CreatorInfo = styled(SecondGradientBackground)`
   width: 210px;
   border-radius:50% !important;
   font-size:18px;
-  justify-content: space-around;
+  // justify-content: space-around;
   @media (max-width: 1550px) {
     height: 50px;
   }

@@ -97,14 +97,15 @@ export function NavigationSidebar({ openNav, setOpenNav }) {
                 <img className="logo-img" src="/images/logotext.svg" alt="logo" />
               </StyledDivForLogo>
             </Link>
-          ) : (
+          </Flex>
+          {/* ) : ( */}
             <ConnectedWalletButton
               connected={!!accountId}
               walletName={accountId}
               onConnect={() => connectWallet()}
               onDisconnect={() => disconnect()}
             />
-          )}
+          {/* )} */}
           {openNav && (
             <MobileMenu ref={ref}>
               <MobileMenuWrapper>
@@ -357,15 +358,15 @@ const VFlex = styled('div', {
 
 const StyledMenuList = styled(MenuList, {
   boxShadow:
-    '0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4)',
-  background:
-    'linear-gradient(0deg, rgba(5, 6, 22, 0.2), rgba(5, 6, 22, 0.2)) padding-box, linear-gradient(90.65deg,rgba(255, 255, 255, 0.2) 0.82%,rgba(0, 0, 0, 0) 98.47%)border-box',
-  borderRadius: '24px',
-  border: '1px solid rgba(255,255,255,0.2)',
-  padding: '20px',
-  width: '400px',
-  backdropFilter: 'blur(30px)',
+    '0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4) !important',
+  background: 'rgb(56,56,69) !important',
+  border: '1px solid rgba(255,255,255,0.2) !important',
+  borderRadius: '24px !important',
+  padding: '20px !important',
+  width: '400px !important',
+  backdropFilter: 'blur(80px) !important',
 })
+
 const ProfileMenuItem = styled('div', {
   backDropFilter: 'blur(40px)',
   margin: '5px 0',

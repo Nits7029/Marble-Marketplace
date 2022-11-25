@@ -100,7 +100,7 @@ export function NftCard({ nft, id, type }): JSX.Element {
                   </Flex>
                 )}
               </Stack>
-            </div>
+            )}
 
             <HStack>
               <div>

@@ -132,6 +132,7 @@ const StyledButton = styled.button`
 `
 
 const IntroContainer = styled.div`
+display:flex;
   flex-wrap: wrap;
   margin-top: 60px;
   height:100%;
@@ -196,12 +197,16 @@ const Title = styled.div`
 `
 
 const MiniInfoCard = styled(GradientBackground)`
-  width: 40%;
-  height: 110px;
+  // width: 40%;
+  // height: 110px;
+  // padding: 15px;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  position: relative;
+  width: 30%;
+  border-radius: 20px;
   padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   &:before {
     border-radius: 20px;
     opacity: 0.2;

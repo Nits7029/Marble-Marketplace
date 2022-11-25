@@ -27,6 +27,7 @@ export const StyledListForLinks = styled.div`
   row-gap: 10px;
   align-items: center;
   height: 100%;
+  display:flex;
 `
 export const StyledLink = styled.div`
   font-size: 16px;

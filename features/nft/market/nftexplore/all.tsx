@@ -131,7 +131,6 @@ const Explore = () => {
           </FilterCard>
         </Link>
       </Filter>
-      {console.log("loading", loading)}
       {/* {loading ? (
         <ChakraProvider>
           <div
@@ -207,7 +206,7 @@ const Explore = () => {
                 padding: '20px',
               }}
             >
-             {loading && <Spinner size="xl" />}
+             {/* {loading && <Spinner size="xl" />} */}
             </div>
           </ChakraProvider>
         }
@@ -237,54 +236,54 @@ const Explore = () => {
   )
 }
 
-const ExploreWrapper = styled.div``
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding: 40px 0;
-  gap: 30px;
-  max-width:100% !important;
+// const ExploreWrapper = styled.div``
+// const Container = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+//   padding: 40px 0;
+//   gap: 30px;
+//   max-width:100% !important;
   
-  @media (max-width:1200px){
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (max-width:640px){
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-`
-const Filter = styled.div`
-  display: flex;
-  column-gap: 20px;
-  max-width: 800px;
-  // padding:0 !important;
-`
-const FilterCard = styled.div`
-  border-radius: 30px;
-  backdrop-filter: blur(30px);
-  box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
-    inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: Mulish;
-  align-items: center;
-  width: fit-content;
-  min-width:100px;
-  white-space:nowrap;
-  justify-content:center;
-  padding: 10px;
-  @media (max-width:576px){
-    font-size:14px !important;
-    height:55px;
-    min-width:120px;
-  }
-`
+//   @media (max-width:1200px){
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//   }
+//   @media (max-width:640px){
+//     grid-template-columns: repeat(1, minmax(0, 1fr));
+//   }
+// `
+// const Filter = styled.div`
+//   display: flex;
+//   column-gap: 20px;
+//   max-width: 800px;
+//   // padding:0 !important;
+// `
+// const FilterCard = styled.div`
+//   border-radius: 30px;
+//   backdrop-filter: blur(30px);
+//   box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
+//     inset 0px 14px 24px rgba(17, 20, 29, 0.4);
+//   background: linear-gradient(
+//     180deg,
+//     rgba(255, 255, 255, 0.06) 0%,
+//     rgba(255, 255, 255, 0.06) 100%
+//   );
+//   display: flex;
+//   font-size: 16px;
+//   font-weight: 500;
+//   cursor: pointer;
+//   font-family: Mulish;
+//   align-items: center;
+//   width: fit-content;
+//   min-width:100px;
+//   white-space:nowrap;
+//   justify-content:center;
+//   padding: 10px;
+//   @media (max-width:576px){
+//     font-size:14px !important;
+//     height:55px;
+//     min-width:120px;
+//   }
+// `
 const NumberWrapper = styled.div<{ isActive: boolean }>`
   height: 34px;
   background: ${({ isActive }) =>
