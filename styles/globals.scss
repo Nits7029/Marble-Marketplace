@@ -15,8 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     ::-webkit-scrollbar {
       width: 0px;
     }
@@ -1020,10 +1019,9 @@ div {
   }
 
 }
-
-@media screen and (max-width: 480px) {
-  div {
-    .main-section {
+@media screen and (max-width: 650px) {
+  div{
+    .main-section{
       margin-top: 20px;
       padding: 0px !important;
     }

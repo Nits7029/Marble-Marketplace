@@ -22,9 +22,6 @@ export default function Home() {
   const borderColor = theme.borderColors.default
   const dispatch = useDispatch()
 
-  const uiListData = useSelector((state: State) => state.uiData)
-  const { nft_column_count } = uiListData
-
   const filterData = useSelector((state: State) => state.filterData)
   const { filter_status } = filterData
 
@@ -32,18 +29,6 @@ export default function Home() {
     setTabIndex(index)
   }
 
-  useEffect(() => {
-    //setUIData(NFT_COLUMN_COUNT, DEFAULT_NFT_COLUMN_COUNT)
-    dispatch({
-      type: NFT_COLUMN_COUNT,
-      payload: DEFAULT_NFT_COLUMN_COUNT,
-    })
-    //setFilterData(FILTER_STATUS, DEFAULT_FILTER_STATUS)
-    dispatch({
-      type: FILTER_STATUS,
-      payload: filter_status,
-    })
-  }, [dispatch])
   useEffect(() => {
     ;(async () => {
       if (collectionId === undefined || collectionId == '[name]') return false

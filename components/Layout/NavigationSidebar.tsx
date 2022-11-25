@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button } from '../Button'
 import { useBaseTokenInfo } from 'hooks/useTokenInfo'
 import { getTokenBalance } from 'hooks/useTokenBalance'
 import { useConnectWallet } from '../../hooks/useConnectWallet'
@@ -25,6 +24,8 @@ import {
   StyledDivForLogo,
   CreateButton,
   StyledMenuItem,
+  MobileProfileInfo,
+  AddressWrapper,
 } from './styled'
 
 export function NavigationSidebar({ openNav, setOpenNav }) {
@@ -96,10 +97,218 @@ export function NavigationSidebar({ openNav, setOpenNav }) {
                 <img className="logo-img" src="/images/logotext.svg" alt="logo" />
               </StyledDivForLogo>
             </Link>
-            {accountId ? (
-              <Link href="/create" passHref>
-                <CreateButton>Create</CreateButton>
+          ) : (
+            <ConnectedWalletButton
+              connected={!!accountId}
+              walletName={accountId}
+              onConnect={() => connectWallet()}
+              onDisconnect={() => disconnect()}
+            />
+          )}
+          {openNav && (
+            <MobileMenu ref={ref}>
+              <MobileMenuWrapper>
+                <Link href="/" passHref>
+                  <StyledDivForLogo as="a">
+                    <img
+                      className="logo-img"
+                      src="/images/logotext.svg"
+                      alt="logo"
+                    />
+                  </StyledDivForLogo>
+                </Link>
+                {accountId && (
+                  <MobileProfileInfo>
+                    <RoundedIconComponent
+                      size="48px"
+                      address={accountId}
+                      direction="column"
+                      font="16px"
+                    />
+                    <MobileWalletInfo>
+                      <p>Wallet Balance</p>
+                      <h2>{balance.toFixed(2)} Near</h2>
+                      <AddressWrapper>
+                        <p>{getReducedAddress(accountId)}</p>&nbsp;
+                        <GreenRound />
+                      </AddressWrapper>
+                    </MobileWalletInfo>
+                  </MobileProfileInfo>
+                )}
+                <MobileLinkWrapper>
+                  <StyledLink>
+                    <Link
+                      href="https://app.marbledao.finance/dashboard"
+                      passHref
+                    >
+                      <a className="dropdown-item">
+                        <span>Feed</span>
+                      </a>
+                    </Link>
+                  </StyledLink>
+                  <StyledLink>
+                    <Link href="/explore/nfts" passHref>
+                      <a className="dropdown-item">
+                        <span className={isActive('/explore/nfts')}>
+                          Browse
+                        </span>
+                      </a>
+                    </Link>
+                  </StyledLink>
+                  <StyledLink>
+                    <a
+                      className="dropdown-item"
+                      href="https://near.marbledao.finance/"
+                      target="__blank"
+                    >
+                      <span className={isActive('/defi')}>DeFi</span>
+                    </a>
+                  </StyledLink>
+                  <StyledLink>
+                    <Link href="/stake" passHref>
+                      <a className="dropdown-item">
+                        <span className={isActive('/stake')}>Stake</span>
+                      </a>
+                    </Link>
+                  </StyledLink>
+                  <StyledLink>
+                    <Link href="/metaverse" passHref>
+                      <a className="dropdown-item">
+                        <span className={isActive('/metaverse')}>
+                          Metaverse
+                        </span>
+                      </a>
+                    </Link>
+                  </StyledLink>
+                  <HorizontalDivider />
+                  <StyledLink>
+                    <Setting />
+                    &nbsp; Settings (soon)
+                  </StyledLink>
+                  <StyledLink>
+                    <Help />
+                    &nbsp; Help (soon)
+                  </StyledLink>
+                </MobileLinkWrapper>
+                <ConnectedWalletButton
+                  connected={!!accountId}
+                  walletName={accountId}
+                  onConnect={() => connectWallet()}
+                  onDisconnect={() => disconnect()}
+                />
+              </MobileMenuWrapper>
+            </MobileMenu>
+          )}
+        </MobileWrapper>
+      ) : (
+        <StyledWrapper>
+          <StyledListForLinks>
+            <Link href="/" passHref>
+              <StyledDivForLogo as="a">
+                <img
+                  className="logo-img"
+                  src="/images/logotext.svg"
+                  alt="logo"
+                />
+              </StyledDivForLogo>
+            </Link>
+            <VerticalDivider />
+            <StyledLink>
+              <Link href="https://app.marbledao.finance/dashboard" passHref>
+                <a className="dropdown-item">
+                  <span>Feed</span>
+                </a>
               </Link>
+            </StyledLink>
+            <StyledLink>
+              <Link href="/explore/nfts" passHref>
+                <a className="dropdown-item">
+                  <span className={isActive('/explore/nfts')}>Browse</span>
+                </a>
+              </Link>
+            </StyledLink>
+            <StyledLink>
+              <a
+                className="dropdown-item"
+                href="https://near.marbledao.finance/"
+                target="__blank"
+              >
+                <span className={isActive('/defi')}>DeFi</span>
+              </a>
+            </StyledLink>
+            <StyledLink>
+              <Link href="/staking" passHref>
+                <a className="dropdown-item">
+                  <span className={isActive('/staking')}>Stake</span>
+                </a>
+              </Link>
+            </StyledLink>
+            <StyledLink>
+              <Link href="/metaverse" passHref>
+                <a className="dropdown-item">
+                  <span className={isActive('/metaverse')}>Metaverse</span>
+                </a>
+              </Link>
+            </StyledLink>
+          </StyledListForLinks>
+          <ButtonField>
+            {accountId ? (
+              <Menu>
+                <MenuButton
+                  borderRadius="50%"
+                  border="3px solid rgba(255, 255, 255, 0.2)"
+                >
+                  <RoundedIcon
+                    size="36px"
+                    src={
+                      profile.avatar
+                        ? process.env.NEXT_PUBLIC_PINATA_URL + profile.avatar
+                        : default_image
+                    }
+                  />
+                </MenuButton>
+                <StyledMenuList>
+                  <Link href={`/profile/${accountId}`} passHref>
+                    <ProfileMenuItem>
+                      <Flex>
+                        <RoundedIconComponent size="58px" address={accountId} />
+                      </Flex>
+                      <RoundedLeft />
+                    </ProfileMenuItem>
+                  </Link>
+                  <StyledMenuItem>
+                    <VFlex>
+                      <p>Wallet Balance</p>
+                      <h1>{balance.toFixed(2)} Near</h1>
+                    </VFlex>
+                    <AddressWrapper>
+                      <p>{getReducedAddress(accountId)}</p>&nbsp;
+                      <GreenRound />
+                    </AddressWrapper>
+                  </StyledMenuItem>
+                  <StyledMenuItem>
+                    <Flex>
+                      <Setting />
+                      &nbsp; Settings (soon)
+                    </Flex>
+                    <RoundedLeft />
+                  </StyledMenuItem>
+                  <StyledMenuItem>
+                    <Flex>
+                      <Help />
+                      &nbsp; Help (soon)
+                    </Flex>
+                    <RoundedLeft />
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={() => disconnect()}>
+                    <Flex>
+                      <Disconnect />
+                      &nbsp; Disconnect
+                    </Flex>
+                    <RoundedLeft />
+                  </StyledMenuItem>
+                </StyledMenuList>
+              </Menu>
             ) : (
               <ConnectedWalletButton
                 connected={!!accountId}
@@ -108,205 +317,12 @@ export function NavigationSidebar({ openNav, setOpenNav }) {
                 onDisconnect={() => disconnect()}
               />
             )}
-            {openNav && (
-              <MobileMenu ref={ref}>
-                <MobileMenuWrapper>
-                  <Link href="/" passHref>
-                    <StyledDivForLogo as="a">
-                      <img
-                        className="logo-img"
-                        src="/images/logotext.svg"
-                        alt="logo"
-                      />
-                    </StyledDivForLogo>
-                  </Link>
-                  {accountId && (
-                    <MobileProfileInfo>
-                      <RoundedIconComponent
-                        size="48px"
-                        address={accountId}
-                        direction="column"
-                        font="14px"
-                      />
-                      <MobileWalletInfo>
-                        <p>Wallet Balance</p>
-                        <h2>{balance.toFixed(2)} Near</h2>
-                        <AddressWrapper>
-                          <p>{getReducedAddress(accountId)}</p>&nbsp;
-                          <GreenRound />
-                        </AddressWrapper>
-                      </MobileWalletInfo>
-                    </MobileProfileInfo>
-                  )}
-                  <MobileLinkWrapper>
-                    <StyledLink>
-                      <Link
-                        href="https://app.marbledao.finance/dashboard"
-                        passHref
-                      >
-                        <a className="dropdown-item">
-                          <span>Feed</span>
-                        </a>
-                      </Link>
-                    </StyledLink>
-                    <StyledLink>
-                      <Link href="/explore" passHref>
-                        <a className="dropdown-item">
-                          <span className={isActive('/explore')}>Browse</span>
-                        </a>
-                      </Link>
-                    </StyledLink>
-                    <StyledLink>
-                      <Link href="/explore" passHref>
-                        <a className="dropdown-item">
-                          <span className={isActive('/defi')}>DeFi</span>
-                        </a>
-                      </Link>
-                    </StyledLink>
-                    <HorizontalDivider />
-                    <StyledLink>
-                      <Setting />
-                      &nbsp; Setting(soon)
-                    </StyledLink>
-                    <StyledLink>
-                      <Help />
-                      &nbsp; Help(soon)
-                    </StyledLink>
-                  </MobileLinkWrapper>
-                  <ConnectedWalletButton
-                    connected={!!accountId}
-                    walletName={accountId}
-                    onConnect={() => connectWallet()}
-                    onDisconnect={() => disconnect()}
-                  />
-                </MobileMenuWrapper>
-              </MobileMenu>
-            )}
-          </Flex>
-        </MobileWrapper>
-      ) : (
-        <StyledWrapper className={`wrap-header ${openNav ? 'open' : ''}`}>
-          <StyledMenuContainer className="wrap-menu container">
-            <StyledListForLinks className="top-menu-links">
-              <Link href="/" passHref>
-                <StyledDivForLogo as="a">
-                  <img
-                    className="logo-img"
-                    src="/images/logotext.svg"
-                    alt="logo"
-                  />
-                </StyledDivForLogo>
+            {accountId && (
+              <Link href="/create" passHref>
+                <CreateButton>Create</CreateButton>
               </Link>
-              <VerticalDivider />
-              <StyledLink>
-                <Link href="https://app.marbledao.finance/dashboard" passHref>
-                  <a className="dropdown-item">
-                    <span>Feed</span>
-                  </a>
-                </Link>
-              </StyledLink>
-              <StyledLink>
-                <Link href="/explore" passHref>
-                  <a className="dropdown-item">
-                    <span className={isActive('/explore')}>Browse</span>
-                  </a>
-                </Link>
-              </StyledLink>
-              <StyledLink>
-                <a
-                  className="dropdown-item"
-                  href="https://near.marbledao.finance/"
-                  target="__blank"
-                >
-                  <span className={isActive('/defi')}>DeFi</span>
-                </a>
-              </StyledLink>
-              {accountId && (
-                <StyledLink>
-                  <Link href="/staking" passHref>
-                    <a className="dropdown-item">
-                      <span className={isActive('/staking')}>Staking</span>
-                    </a>
-                  </Link>
-                </StyledLink>
-              )}
-            </StyledListForLinks>
-            <ButtonField className='header-btn'>
-              {accountId ? (
-                <Menu>
-                  <MenuButton
-                    borderRadius="50%"
-                    border="3px solid rgba(255, 255, 255, 0.2)"
-                  >
-                    <RoundedIcon
-                      size="36px"
-                      src={
-                        profile.avatar
-                          ? process.env.NEXT_PUBLIC_PINATA_URL + profile.avatar
-                          : default_image
-                      }
-                    />
-                  </MenuButton>
-                  <StyledMenuList>
-                    <Link href={`/profile/${accountId}`} passHref>
-                      <ProfileMenuItem>
-                        <Flex>
-                          <RoundedIconComponent
-                            size="58px"
-                            address={accountId}
-                          />
-                        </Flex>
-                        <RoundedLeft />
-                      </ProfileMenuItem>
-                    </Link>
-                    <StyledMenuItem>
-                      <VFlex>
-                        <p>Wallet Balance</p>
-                        <h1>{balance.toFixed(2)} Near</h1>
-                      </VFlex>
-                      <AddressWrapper>
-                        <p>{getReducedAddress(accountId)}</p>&nbsp;
-                        <GreenRound />
-                      </AddressWrapper>
-                    </StyledMenuItem>
-                    <StyledMenuItem>
-                      <Flex>
-                        <Setting />
-                        &nbsp; Setting(soon)
-                      </Flex>
-                      <RoundedLeft />
-                    </StyledMenuItem>
-                    <StyledMenuItem>
-                      <Flex>
-                        <Help />
-                        &nbsp; Help(soon)
-                      </Flex>
-                      <RoundedLeft />
-                    </StyledMenuItem>
-                    <StyledMenuItem onClick={() => disconnect()}>
-                      <Flex>
-                        <Disconnect />
-                        &nbsp; Disconnect
-                      </Flex>
-                      <RoundedLeft />
-                    </StyledMenuItem>
-                  </StyledMenuList>
-                </Menu>
-              ) : (
-                <ConnectedWalletButton
-                  connected={!!accountId}
-                  walletName={accountId}
-                  onConnect={() => connectWallet()}
-                  onDisconnect={() => disconnect()}
-                />
-              )}
-              {accountId && (
-                <Link href="/create" passHref>
-                  <CreateButton>Create</CreateButton>
-                </Link>
-              )}
-            </ButtonField>
-          </StyledMenuContainer>
+            )}
+          </ButtonField>
         </StyledWrapper>
       )}
     </>
@@ -318,21 +334,6 @@ const GreenRound = styled('div', {
   height: '12px',
   background: '#24BE74',
   borderRadius: '50%',
-})
-const AddressWrapper = styled('div', {
-  background:
-    'linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.37) 100%)',
-  boxShadow:
-    '0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4)',
-  backdropFilter: 'blur(30px)',
-  borderRadius: '10px',
-  border: '1px solid rgba(255,255,255,0.2)',
-  display: 'flex',
-  ' p': {
-    fontSize: '14px',
-  },
-  padding: '10px',
-  alignItems: 'center',
 })
 const Flex = styled('div', {
   display: 'flex',
@@ -399,9 +400,9 @@ const ButtonField = styled('div', {
 
 const VerticalDivider = styled('div', {
   width: '1px',
-  height: '80%',
+  height: '60%',
   border: '1px solid #363B4E',
-  margin: '0 10px',
+  marginInline: '20px 0px',
 })
 const HorizontalDivider = styled('div', {
   height: '1px',
@@ -435,17 +436,9 @@ const MobileWrapper = styled('div', {
   alignItems: 'center',
   zIndex: '2',
   background: 'rgba(8,12,28,0,6)',
-})
-const MobileProfileInfo = styled('div', {
-  background: 'rgba(5,6,21,0.2)',
-  boxShadow: '0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6D6D78',
-  backdropFilter: 'blur(40px)',
-  borderRadius: '20px',
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: '15px',
   width: '100%',
 })
+
 const MobileWalletInfo = styled('div', {
   '& p': {
     fontSize: '12px',

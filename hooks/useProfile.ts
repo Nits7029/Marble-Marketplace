@@ -13,6 +13,18 @@ export const getProfileInfo = async (address) => {
   }
 }
 
+export const getSimpleProfileInfo = async (address) => {
+  try {
+    const { data } = await axios.get(`${backend_url}/get_simple_user`, {
+      params: { id: address },
+    })
+    return data
+  } catch (err) {
+    console.log('get profile info: ', err)
+    return {}
+  }
+}
+
 export const setImage = async (imageData) => {
   try {
     const { data } = await axios.post(`${backend_url}/set_image`, imageData)

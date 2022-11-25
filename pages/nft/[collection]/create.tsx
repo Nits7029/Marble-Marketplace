@@ -18,6 +18,7 @@ import {
   successToast,
   getErrorMessage,
 } from 'components/transactionTipPopUp'
+import { GradientBackground, SecondGradientBackground } from 'styles/styles'
 
 const PUBLIC_PINATA_API_KEY = process.env.NEXT_PUBLIC_PINATA_API_KEY || ''
 const PUBLIC_PINATA_SECRET_API_KEY =
@@ -80,7 +81,7 @@ export default function NFTCreate() {
           if (isSwap) {
             !transactionErrorType && !errorType && successToast(txHash)
             transactionErrorType && failToast(txHash, transactionErrorType)
-            router.push('/explore')
+            router.push('/explore/nfts')
             return
           }
           router.push(pathname)
@@ -277,7 +278,7 @@ export default function NFTCreate() {
                           </Footer>
                         </Stack>
                         <Stack>
-                          <h3>Collections</h3>
+                          <h3>Collection</h3>
                           <CollectionCard className="bg-border-linear">
                             <RoundedIcon
                               size="70px"
@@ -380,8 +381,7 @@ export default function NFTCreate() {
                   </Stack>
 
                   <Divider />
-
-                  <Stack spacing="50px" padding="0 150px" className="guide-col">
+                  <Stack spacing="50px" maxWidth="600px" margin="0 auto" padding="0 150px" className="guide-col">
                     <a>Read our full community guidelines here</a>
                     <Stack className='btn-mobile'>
                       {error && (
@@ -435,7 +435,6 @@ const Container = styled.div`
   p {
     font-size: 14px;
     font-family: Mulish;
-    font-weight: 600;
   }
   h1 {
     font-size: 46px;
@@ -461,7 +460,23 @@ const Container = styled.div`
     font-family: Mulish;
     cursor: pointer;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
+    padding-top: 100px;
+    h1 {
+      font-size: 30px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 14px;
+      font-family: Mulish;
+    }
+  }
+  @media (max-width: 650px) {
     padding: 0;
     h1 {
       font-size: 22px;
@@ -475,19 +490,18 @@ const Container = styled.div`
     p {
       font-size: 14px;
       font-family: Mulish;
-      font-weight: 400;
     }
   }
 `
-const Card = styled.div<{ fullWidth: boolean }>`
-  padding: 45px 60px;
-  border-radius: 30px;
+const Card = styled(SecondGradientBackground)<{ fullWidth: boolean }>`
+  &:before {
+    opacity: 0.3;
+    border-radius: 30px;
+  }
+  padding: 40px;
   max-width: 1000px;
-  margin:0 auto;
-  width:100%;
-  
-  @media (max-width: 480px) {
-    width: 100% !important;
+  width: 100%;
+  @media (max-width: 1024px) {
     padding: 20px;
     margin:0 !important;
   }
@@ -501,7 +515,7 @@ const StyledInput = styled.input`
   padding: 20px 30px;
   font-size: 20px;
   font-family: Mulish;
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 16px;
   }
 `
@@ -523,20 +537,25 @@ const Footer = styled.div`
     font-family: Mulish;
   }
 `
-const CollectionCard = styled.div`
-  border-radius: 20px;
+const CollectionCard = styled(GradientBackground)`
+  &:before {
+    opacity: 0.2;
+    border-radius: 20px;
+  }
   padding: 25px;
   display: flex;
   align-items: center;
   cursor: pointer;
 `
-const NFTContainer = styled.div`
+const NFTContainer = styled(SecondGradientBackground)`
+  &:before {
+    border-radius: 30px;
+    opacity: 0.3;
+  }
   width: 35%;
-  height: 35%;
   padding: 25px;
-  border-radius: 30px;
-  backdrop-filter: blur(30px);
-  @media (max-width: 480px) {
+  height: fit-content;
+  @media (max-width: 800px) {
     width: 100%;
   }
 `

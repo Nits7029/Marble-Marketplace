@@ -1,62 +1,26 @@
-import {
-  ChakraProvider,
-  Spinner,
-  Stack,
-  Tab,
-  Text,
-  HStack,
-} from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { ChakraProvider, Spinner, Stack, Text } from '@chakra-ui/react'
 import { Button } from 'components/Button'
-import { IconWrapper } from 'components/IconWrapper'
 import { NftTable } from 'components/NFT'
-import { Activity, Grid } from 'icons'
+import { RoundedIconComponent } from 'components/RoundedIcon'
+import { getCollectionCategory } from 'hooks/useCollection'
+import { More, ArrowDown } from 'icons'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { useDispatch, useSelector } from 'react-redux'
-import { NftInfo } from 'services/nft'
-import { State } from 'store/reducers'
-import { NFT_COLUMN_COUNT } from 'store/types'
 import styled from 'styled-components'
-import { default_image, default_featured_image } from 'util/constants'
+import { SecondGradientBackground } from 'styles/styles'
+import { default_featured_image, default_image } from 'util/constants'
+import { convertMicroDenomToDenom } from 'util/conversion'
+import { isMobile } from 'util/device'
 import {
   marketplaceViewFunction,
   nftViewFunction,
   NFT_CONTRACT_NAME,
 } from 'util/near'
-import { getCollectionCategory } from 'hooks/useCollection'
+// import { getCollectionCategory } from 'hooks/useCollection'
 import { getCurrentWallet } from 'util/sender-wallet'
 import EditCollectionModal from './components/EditCollectionModal'
-import { RoundedIconComponent } from 'components/RoundedIcon'
-import { isMobile } from 'util/device'
-
-export const CollectionTab = ({ index }) => {
-  return (
-    <TabWrapper>
-      <Tab>
-        <Button
-          className={`hide tab-link ${index == 0 ? 'active' : ''}`}
-          as="a"
-          variant="ghost"
-          iconLeft={<IconWrapper icon={<Grid />} />}
-        >
-          Items
-        </Button>
-      </Tab>
-      <Tab>
-        <Button
-          className={`hide tab-link ${index == 1 ? 'active' : ''}`}
-          as="a"
-          variant="ghost"
-          iconLeft={<IconWrapper icon={<Activity />} />}
-        >
-          Activity
-        </Button>
-      </Tab>
-    </TabWrapper>
-  )
-}
 
 interface CollectionProps {
   readonly id: string
@@ -68,21 +32,14 @@ export const Collection = ({ id }: CollectionProps) => {
   const wallet = getCurrentWallet()
   const [category, setCategory] = useState('Undefined')
   const [currentTokenCount, setCurrentTokenCount] = useState(0)
+  const [category, setCategory] = useState('Digital')
   const [collectionInfo, setCollectionInfo] = useState<any>({})
-  const [numTokens, setNumTokens] = useState(0)
+  const [pageNum, setPageNum] = useState(0)
   const [isCollapse, setCollapse] = useState(false)
-  const [isLargeNFT, setLargeNFT] = useState(true)
-  const [filterCount, setFilterCount] = useState(0)
-  const [nfts, setNfts] = useState<NftInfo[]>([])
-  const [hasMore, setHasMore] = useState(false)
-  const [searchGroup, setSearchGroup] = useState('all')
-  const dispatch = useDispatch()
-  const uiListData = useSelector((state: State) => state.uiData)
-  const { nft_column_count } = uiListData
-
-  const filterData = useSelector((state: State) => state.filterData)
-  const { filter_status } = filterData
-  const [searchVal, setSearchVal] = useState('')
+  const [nfts, setNfts] = useState<any[]>([])
+  const [hasMore, setHasMore] = useState(true)
+  const [filtered, setFiltered] = useState([])
+  const [filterTab, setFilterTab] = useState('all')
   const fetchCollectionInfo = useCallback(async () => {
     let result: any = {}
     let collection_info: any = {}
@@ -119,7 +76,7 @@ export const Collection = ({ id }: CollectionProps) => {
     setCollectionInfo(result)
     return result
   }, [id])
-  const fetchTokensInfo = useCallback(async () => {
+  const fetchTokensInfo = async () => {
     let collectionNFTs = []
     let info = []
     let res_collection = await fetchCollectionInfo()
@@ -128,12 +85,13 @@ export const Collection = ({ id }: CollectionProps) => {
         methodName: 'nft_tokens_by_series',
         args: {
           token_series_id: id,
-          // from_index: '0',
-          // limit: 8,
+          from_index: (pageNum * 12).toString(),
+          limit: 12,
         },
       })
-      setCurrentTokenCount(info.length)
+      setPageNum(pageNum + 1)
     } catch (error) {
+      setHasMore(false)
       return []
     }
 
@@ -174,7 +132,7 @@ export const Collection = ({ id }: CollectionProps) => {
       })
     )
     return collectionNFTs
-  }, [id])
+  }
   useEffect(() => {
     ; (async () => {
       if (id === undefined || id == '[name]') return false
@@ -188,7 +146,6 @@ export const Collection = ({ id }: CollectionProps) => {
         const _category = await getCollectionCategory(id)
 
         setCategory(_category)
-        setNumTokens(num)
       } catch (err) {
         console.log('nft get counts error: ', err)
       }
@@ -199,133 +156,25 @@ export const Collection = ({ id }: CollectionProps) => {
       if (id === undefined || id == '[name]') return false
 
       const tokensInfo = await fetchTokensInfo()
-      let traits = []
-      for (let i = 0; i < tokensInfo.length; i++) {
-        if (
-          filter_status.length == 0 ||
-          filter_status.indexOf(tokensInfo[i].attributes[0].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[1].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[2].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[3].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[4].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[5].value) != -1 ||
-          filter_status.indexOf(tokensInfo[i].attributes[7].value) != -1
-        ) {
-          if (searchGroup === 'all') traits.push(tokensInfo[i])
-          else if (searchGroup === tokensInfo[i].saleType)
-            traits.push(tokensInfo[i])
-        }
-      }
-      let hasMoreFlag = false
-      let i = 0
-      let nftIndex = 0
-      let isPageEnd = false
-      if (traits.length == 0) isPageEnd = true
-      let nftsForCollection = []
-      while (!isPageEnd) {
-        if (searchVal == '' || traits[i].name.indexOf(searchVal) != -1) {
-          nftsForCollection.push(traits[i])
-          hasMoreFlag = true
-          nftIndex++
-          if (nftIndex == pageCount) {
-            isPageEnd = true
-          }
-        }
-        i++
-        if (i == traits.length) {
-          isPageEnd = true
-        }
-      }
-      setNfts(nftsForCollection)
-      setHasMore(currentTokenCount > numTokens)
+      setNfts(tokensInfo)
     })()
-  }, [id, filterCount, searchVal, numTokens, searchGroup, filter_status])
+  }, [id])
   const getMoreNfts = async () => {
-    // if (id === undefined || id == '[name]' || !hasMore) return false
-    // let tokensInfo = []
-    // let collectionNFTs = []
-    // try {
-    //   tokensInfo = await nftViewFunction({
-    //     methodName: 'nft_tokens_by_series',
-    //     args: {
-    //       token_series_id: id,
-    //       from_index: currentTokenCount.toString(),
-    //       limit: 8,
-    //     },
-    //   })
-    // } catch (error) {
-    //   console.log('getNFTs error: ', error)
-    // }
-    // setCurrentTokenCount(currentTokenCount + tokensInfo.length)
-    // for (let i = 0; i < tokensInfo.length; i++) {
-    //   let market_data
-    //   try {
-    //     market_data = await marketplaceViewFunction({
-    //       methodName: 'get_market_data',
-    //       args: {
-    //         nft_contract_id: NFT_CONTRACT_NAME,
-    //         token_id: tokensInfo[i].token_id,
-    //       },
-    //     })
-    //   } catch (error) {
-    //     console.log('error: ', error)
-    //   }
-    //   let ipfs_nft = await fetch(
-    //     process.env.NEXT_PUBLIC_PINATA_URL + tokensInfo[i].metadata.reference
-    //   )
-    //   let ipfs_collection = await fetch(
-    //     process.env.NEXT_PUBLIC_PINATA_URL + tokensInfo[i].metadata.extra
-    //   )
-    //   let res_nft = await ipfs_nft.json()
-    //   let res_collection = await ipfs_collection.json()
-    //   console.log('collectionInfo: ', res_nft)
-    //   res_nft['tokenId'] = tokensInfo[i].token_id.split(':')[1]
-    //   res_nft['title'] = res_collection.name
-    //   res_nft['image'] = process.env.NEXT_PUBLIC_PINATA_URL + res_nft.uri
-    //   if (market_data) {
-    //     res_nft['saleType'] = market_data.is_auction ? 'Auction' : 'Direct Sell'
-    //     res_nft['price'] = market_data.price
-    //     res_nft['started_at'] = market_data.started_at
-    //     res_nft['ended_at'] = market_data.ended_at
-    //   } else res_nft['saleType'] = 'NotSale'
-    //   collectionNFTs.push(res_nft)
-    // }
-    // let traits = []
-    // for (let i = 0; i < collectionNFTs.length; i++) {
-    //   if (
-    //     filter_status.length == 0 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[0].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[1].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[2].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[3].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[4].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[5].value) != -1 ||
-    //     filter_status.indexOf(collectionNFTs[i].attributes[7].value) != -1
-    //   ) {
-    //     traits.push(collectionNFTs[i])
-    //   }
-    // }
-    // setNfts(traits)
-    // setHasMore(currentTokenCount >= numTokens)
+    const _tokensInfo = await fetchTokensInfo()
+    setNfts([...nfts, ..._tokensInfo])
   }
-
+  const handleFilter = (id: string) => {
+    // const filteredNFTs = nfts.filter((nft) => nft.saleType === id)
+    // setFiltered(filteredNFTs)
+    setFilterTab(id)
+  }
   useEffect(() => {
-    if (isLargeNFT) {
-      if (nft_column_count <= 4) return
-      //setUIData(NFT_COLUMN_COUNT, nft_column_count - 1)
-      dispatch({
-        type: NFT_COLUMN_COUNT,
-        payload: nft_column_count - 1,
-      })
-    } else {
-      if (nft_column_count >= 5) return
-      //setUIData(NFT_COLUMN_COUNT, nft_column_count +1)
-      dispatch({
-        type: NFT_COLUMN_COUNT,
-        payload: nft_column_count + 1,
-      })
-    }
-  }, [dispatch, isLargeNFT])
+    const filteredNFTs =
+      filterTab === 'all'
+        ? nfts
+        : nfts.filter((nft: any) => nft.saleType === filterTab)
+    setFiltered(filteredNFTs)
+  }, [nfts, filterTab])
   return (
     <ChakraProvider>
       <CollectionWrapper>
@@ -346,14 +195,43 @@ export const Collection = ({ id }: CollectionProps) => {
                 />
               </Stack>
             )}
-            <ProfileLogo className="bg-border-linear round-icon">
-              <RoundedIconComponent
-                size="48px"
-                address={collectionInfo.creator}
-              />
-            </ProfileLogo>
+            <ProfileInfo>
+              <ProfileInfoItem>
+                <ProfileInfoTitle>Creator</ProfileInfoTitle>
+                <RoundedIconComponent
+                  size="30px"
+                  address={collectionInfo.creator}
+                />
+              </ProfileInfoItem>
+              {!isMobile() && (
+                <ProfileInfoItem>
+                  <ProfileInfoTitle>Symbol</ProfileInfoTitle>
+                  <ProfileInfoContent>NEAR</ProfileInfoContent>
+                </ProfileInfoItem>
+              )}
+              {!isMobile() && (
+                <ProfileInfoItem>
+                  <ProfileInfoTitle>Collection Of</ProfileInfoTitle>
+                  <ProfileInfoContent>{id}</ProfileInfoContent>
+                </ProfileInfoItem>
+              )}
+              <ProfileInfoItem>
+                <ProfileInfoTitle>Total Sales</ProfileInfoTitle>
+                <ProfileInfoContent>10 NEAR</ProfileInfoContent>
+              </ProfileInfoItem>
+            </ProfileInfo>
           </Stack>
+          <ReportWrapper>
+            <More />
+          </ReportWrapper>
         </Banner>
+        <Heading>
+          <Stack>
+            <Text fontSize={isMobile() ? '24px' : '36px'} fontWeight="700">
+              Description
+            </Text>
+            <DescriptionArea>{collectionInfo.description}</DescriptionArea>
+          </Stack>
 
         <NftList
           className={`${isCollapse ? 'collapse-close' : 'collapse-open'}`}
@@ -372,6 +250,7 @@ export const Collection = ({ id }: CollectionProps) => {
                   color: '$black',
                   stroke: '$black',
                   fontWeight: '500',
+                  width: 'fit-content',
                 }}
                 variant="primary"
                 size="large"
@@ -379,13 +258,49 @@ export const Collection = ({ id }: CollectionProps) => {
                 Mint NFT
               </Button>
             </Link>
-            )}
-          </Heading>
-
-          <InfiniteScroll className="infinite-border"
-            dataLength={numTokens}
+          )}
+        </Heading>
+        <Heading>
+          <Text fontSize={isMobile() ? '24px' : '36px'} fontWeight="700">
+            NFTs
+          </Text>
+        </Heading>
+        <FilterWrapper>
+          <Filter>
+            <FilterCard
+              onClick={() => handleFilter('all')}
+              isActive={filterTab === 'all'}
+            >
+              All
+            </FilterCard>
+            <FilterCard
+              onClick={() => handleFilter('Direct Sell')}
+              isActive={filterTab === 'Direct Sell'}
+            >
+              Buy Now
+            </FilterCard>
+            <FilterCard
+              onClick={() => handleFilter('Auction')}
+              isActive={filterTab === 'Auction'}
+            >
+              Live Auction
+            </FilterCard>
+            <FilterCard
+              onClick={() => handleFilter('Offer')}
+              isActive={filterTab === 'Offer'}
+            >
+              Active Offers
+            </FilterCard>
+          </Filter>
+          <Sort>
+            Most Active <ArrowDown />
+          </Sort>
+        </FilterWrapper>
+        <NftList>
+          <InfiniteScroll
+            dataLength={nfts.length}
             next={getMoreNfts}
-            hasMore={false}
+            hasMore={hasMore}
             loader={
               <div
                 style={{
@@ -402,21 +317,24 @@ export const Collection = ({ id }: CollectionProps) => {
             }
             endMessage={<h4></h4>}
           >
-            <NftTable data={nfts} id={id} type="buy" />
+            <NftTable data={filtered} id={id} type="buy" />
           </InfiniteScroll>
           
           {nfts.length === 0 && wallet.accountId === collectionInfo.creator && (
             <Stack
               spacing="50px"
+              width={isMobile() ? '100%' : '50%'}
               alignItems="center"
-              margin="0 auto"  className="nft-list-col"
+              margin="0 auto"
+              textAlign="center"
+              className="nft-list-col"
             >
               <Text fontSize="30px" fontWeight="500">
                 Customize Your Collection
               </Text>
               <Text fontSize="18px" fontWeight="400" className='text-margin text-center'>
                 Before you mint an NFT to your collection, customize it by
-                uploading <br /> a logo, cover image and description
+                uploading a logo, cover image and description
               </Text>
               <EditCollectionModal
                 collectionInfo={collectionInfo}
@@ -433,16 +351,27 @@ export const Collection = ({ id }: CollectionProps) => {
   )
 }
 
-const CollectionWrapper = styled.div`
-  position: relative;
+const CollectionWrapper = styled.div``
+const DescriptionArea = styled(SecondGradientBackground)`
+  padding: 25px;
+  font-family: Mulish;
+  &:before {
+    border-radius: 20px;
+    opacity: 0.3;
+  }
 `
 const Heading = styled.div`
+  padding: 30px 30px 0 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 50px 0;
-  @media (max-width: 480px) {
-    padding: 0px;
+  @media (max-width: 650px) {
+    padding: 20px;
+    flex-direction: column;
+    row-gap: 20px;
+    button {
+      width: 100%;
+    }
   }
 `
 const LogoTitle = styled.div`
@@ -452,12 +381,11 @@ const LogoTitle = styled.div`
   @media (max-width: 1550px) {
     font-size: 72px;
   }
-
   @media (max-width: 1024px) {
-    font-size: 50px;
+    font-size: 40px;
     margin: 24px 0 !important;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 30px;
     margin:24px 0 !important;
     max-width: 270px;
@@ -492,9 +420,9 @@ const Banner = styled.div`
     height: 675px;
     padding: 150px 50px 50px 50px;
   }
-  @media (max-width: 576px) {
-    height: 100%;
-    padding: 260px 0;
+  @media (max-width: 1024px) {
+    height: 560px;
+    padding: 50px 20px 20px 20px;
   }
 `
 const BannerImage = styled.img`
@@ -520,39 +448,161 @@ const Logo = styled.img`
     width: 135px;
     height: 135px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     width: 100px;
     height: 100px;
     border: 3px solid #ffffff21;
   }
 `
 
-const SelectOption = styled.div<{ isActive: boolean }>`
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 7px 14px 0px #0000001a, 0px 14px 24px 0px #11141d66 inset;
-  border-radius: 30px;
-  display: flex;
-  padding: 15px;
-  min-width: 170px;
-  justify-content: center;
-  cursor: pointer;
-  color: ${({ isActive }) => (isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)')};
-`
-
-const TabWrapper = styled.div``
-
 const NftList = styled.div`
-  padding: 50px 50px 0px;
-  @media (max-width: 480px) {
+  padding: 40px;
+  @media (max-width: 650px) {
     padding: 20px;
     width: 100%;
   }
 `
-const ProfileLogo = styled.div`
-  padding: 10px;
-  display: block;
-  width: 210px;
+const ProfileInfo = styled.div`
+  padding: 20px;
+  box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09),
+    inset 0px 7px 24px rgba(109, 109, 120, 0.38);
+  backdrop-filter: blur(20px);
+  background: linear-gradient(0deg, #050616, #050616) padding-box,
+    linear-gradient(
+        90.65deg,
+        rgba(255, 255, 255, 0.13) 0.82%,
+        rgba(255, 255, 255, 0.17) 98.47%
+      )
+      border-box;
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    90.65deg,
+    rgba(255, 255, 255, 0.13) 0.82%,
+    rgba(255, 255, 255, 0.17) 98.47%
+  );
+  position: absolute;
+  bottom: 40px;
+  border-radius: 20px;
+  display: flex;
+  width: fit-content;
   align-items: center;
-  z-index:99;
-  margin-top:0 !important;
+  column-gap: 60px;
+  @media (max-width: 1024px) {
+    position: relative;
+    column-gap: 20px;
+    bottom: 0;
+  }
+`
+
+const ReportWrapper = styled.div`
+  position: absolute;
+  right: 80px;
+  bottom: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09),
+    inset 0px 7px 24px rgba(109, 109, 120, 0.38);
+  backdrop-filter: blur(20px);
+  background: linear-gradient(0deg, #050616, #050616) padding-box,
+    linear-gradient(
+        90.65deg,
+        rgba(255, 255, 255, 0.13) 0.82%,
+        rgba(255, 255, 255, 0.17) 98.47%
+      )
+      border-box;
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    90.65deg,
+    rgba(255, 255, 255, 0.13) 0.82%,
+    rgba(255, 255, 255, 0.17) 98.47%
+  );
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  svg {
+    width: 20px;
+  }
+  @media (max-width: 1024px) {
+    right: 20px;
+    bottom: 20px;
+  }
+`
+const ProfileInfoItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+`
+
+const ProfileInfoTitle = styled.div`
+  font-size: 14px;
+  font-weight: 300;
+`
+const ProfileInfoContent = styled.div`
+  font-family: Mulish;
+  font-size: 20px;
+  font-weight: 500;
+`
+const Filter = styled.div`
+  display: flex;
+  column-gap: 20px;
+  overflow: auto;
+`
+const FilterCard = styled.div<{ isActive: boolean }>`
+  border-radius: 30px;
+
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    106.01deg,
+    rgba(255, 255, 255, 0.2) 1.02%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  box-shadow: 0px 7px 14px 0px #0000001a, 0px 14px 24px 0px #11141d66 inset;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  padding: 15px 30px;
+  cursor: pointer;
+  text-align: center;
+  font-family: Mulish;
+  color: ${({ isActive }) => (isActive ? 'white' : 'rgba(255,255,255,0.5)')};
+`
+const FilterWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 30px 0 30px;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+`
+const Sort = styled.div`
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1),
+    inset 0px 14px 24px rgba(17, 20, 29, 0.4);
+  backdrop-filter: blur(15px);
+  /* Note: backdrop-filter has minimal browser support */
+  border: 1px solid #ffffff;
+
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-family: Mulish;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  cursor: pointer;
+  width: fit-content;
+  svg {
+    width: 15px;
+  }
 `

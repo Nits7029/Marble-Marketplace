@@ -35,52 +35,11 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 50px 30px;
-  @media (max-width:1200px){
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding:0;
+  padding: 20px;
+  @media (max-width: 1550px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media (max-width:640px){
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-`
-const CollectionDiv = styled.div`
-  padding: 30px;
-  height: 100%;
-  cursor: pointer;
-  @media (max-width: 1450px) {
-    padding: 15px;
-  }
-`
-
-const ImgDiv = styled.div`
-  width: 100%;
-  padding-bottom: 100%;
-  display: block;
-  position: relative;
-`
-
-const Image = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 20px;
-`
-const Logo = styled.img<{ size: string }>`
-  width: ${({ size }) => size};
-  height: ${({ size }) => size};
-  border-radius: 50%;
-  border:4px solid rgba(255, 255, 255, 0.13);
-`
-const Title = styled.div`
-  font-size: 24px;
-  overflow-wrap: anywhere;
-  @media (max-width: 1450px) {
-    font-size: 18px;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `

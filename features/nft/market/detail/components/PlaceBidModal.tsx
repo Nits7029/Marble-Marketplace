@@ -18,6 +18,7 @@ import { NftCard } from 'components/NFT/nft-card'
 import { isMobile } from 'util/device'
 import { StyledCloseIcon } from 'components/Dialog'
 
+// const buttonCss =
 
 const PlaceBidModal = ({
   tokenInfo,
@@ -39,7 +40,6 @@ const PlaceBidModal = ({
   return (
     <ChakraProvider>
       <Button
-        className="btn-buy btn-default"
         css={{
           background: '$white',
           color: '$black',
@@ -47,8 +47,6 @@ const PlaceBidModal = ({
           width: '100%',
           fontWeight:'500',
         }}
-        variant="primary"
-        size="large"
         onClick={onOpen}
       >
         Place Bid
@@ -139,17 +137,17 @@ const PlaceBidModal = ({
 const Container = styled(ModalContent)`
   background: rgba(255, 255, 255, 0.02) !important;
   border-radius: 30px !important;
-  padding:100px 80px 100px 80px !important;
+  padding: 70px;
   color: white !important;
-  max-width: 1320px !important;
-  max-height: 760px;
-  height:100%;
-  margin:0 !important;
-  @media (max-width: 480px) {
+  overflow: hidden;
+  max-width: 1000px !important;
+  margin: 50px;
+  @media (max-width: 650px) {
     width: 90vw !important;
-    padding: 10px !important;
-    max-height: 720px;
-    border-radius: 10px !important;
+    padding: 10px;
+    max-height: 100vh;
+    overflow: auto;
+    margin: 0px;
   }
 `
 const MainWrapper = styled.div`
@@ -165,7 +163,7 @@ const MainWrapper = styled.div`
   h1 {
     font-size: 20px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     flex-direction: column-reverse;
     p {
       font-size: 14px;
@@ -177,9 +175,7 @@ const MainWrapper = styled.div`
 `
 const CardWrapper = styled.div`
   display: flex;
-  height: 556px;
-  width: 434px;
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -217,8 +213,8 @@ const StyledInputRightElement = styled.div`
 `
 const Title = styled.div`
   font-size: 30px;
-  font-weight: 500;
-  @media (max-width: 480px) {
+  font-weight: 600;
+  @media (max-width: 650px) {
     font-size: 20px;
   }
 `

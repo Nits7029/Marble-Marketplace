@@ -9,38 +9,42 @@ import {
   nftViewFunction,
   marketplaceViewFunction,
 } from 'util/near'
-import { NftCard } from 'components/NFT/nft-card'
+import { NftCard, NftCountsType } from 'components/NFT'
 import { convertMicroDenomToDenom } from 'util/conversion'
+import useAxios from 'hooks/useAxios'
+import { useSelector } from 'react-redux'
+import { nfts_per_page } from 'util/constants'
+import {
+  ExploreWrapper,
+  Filter,
+  FilterCard,
+  CountWrapper,
+  Container,
+} from './styled'
 
 const Explore = () => {
   const [nfts, setNfts] = useState([])
-  const [nftCounts, setNftCounts] = useState({
-    Auction: 0,
-    'Direct Sell': 0,
-    NotSale: 0,
+  const [nftCounts, setNftCounts] = useState<NftCountsType>({
+    buynow: 0,
+    activeOffer: 0,
+    auction: 0,
   })
-  const [loading, setLoading] = useState(true)
-  const [filtered, setFiltered] = useState([])
-  const [filterTab, setFilterTab] = useState('all')
   const [hasMore, setHasMore] = useState(true)
-
+  const [page, setPage] = useState(0)
+  const { countInfo } = useSelector((state: any) => state.uiData)
+  const { getNftCounts, getAllNftIds } = useAxios()
   const fetchNfts = async () => {
     let collectionNFTs = []
-    let counts = { Auction: 0, 'Direct Sell': 0, NotSale: 0 }
-    let info = []
-    try {
-      info = await nftViewFunction({
-        methodName: 'nft_tokens',
-        args: {
-          from_index: nfts.length.toString(),
-          limit: 20,
-        },
-      })
-    } catch (error) {
-      console.log('nft_tokens Error: ', error)
-      setHasMore(false)
-      return []
-    }
+    let counts = { Auction: 0, 'Direct Sell': 0, NotSale: 0, Offer: 0 }
+    const tokenIds = await getAllNftIds(page, nfts_per_page)
+    if (tokenIds.length < 12) setHasMore(false)
+    const info = await nftViewFunction({
+      methodName: 'nft_tokens_by_ids',
+      args: {
+        token_ids: tokenIds.map((id) => id.id),
+      },
+    })
+
     await Promise.all(
       info.map(async (element) => {
         let market_data
@@ -87,40 +91,17 @@ const Explore = () => {
         counts[res_nft.saleType]++
       })
     )
-    // return { nftList: collectionNFTs, nft_counts: counts }
     setNfts(nfts.concat(collectionNFTs))
+    setPage(page + 1)
   }
 
   useEffect(() => {
-    // fetchCollections()
-    ; (async () => {
-      // const { nftList, nft_counts }: any = await fetchNfts()
-      // setNfts(nftList)
-      // setFiltered(nftList)
-      // setNftCounts(nft_counts)
-      // setLoading(false)
+    ;(async () => {
+      const nftCounts = await getNftCounts()
+      setNftCounts(nftCounts)
       await fetchNfts()
     })()
   }, [])
-  // const handleFilter = (id: string) => {
-  //   const filteredNFTs = nfts.filter((nft) => nft.saleType === id)
-  //   setFiltered(filteredNFTs)
-  //   setFilterTab(id)
-  // }
-  useEffect(() => {
-    const filteredNFTs =
-      filterTab === 'all'
-        ? nfts
-        : nfts.filter((nft) => nft.saleType === filterTab)
-    setFiltered(filteredNFTs)
-    setLoading(false)
-  }, [nfts, filterTab])
-  const handleFilter = (id: string) => {
-    // const filteredNFTs = nfts.filter((nft) => nft.saleType === id)
-    // setFiltered(filteredNFTs)
-    setFilterTab(id)
-    setLoading(true)
-  }
   const getMoreNfts = async () => {
     // await fetchNfts()
     await fetchNfts()
@@ -129,48 +110,26 @@ const Explore = () => {
   return (
     <ExploreWrapper style={{ padding: "0px" }}>
       <Filter className="collection-tab">
-        <FilterCard className="bg-border-linear"
-          onClick={() => handleFilter('all')}
-          isActive={filterTab === 'all'}
-        >
-          {/* <FilterCard onClick={() => handleFilter('Direct Sell')} className="bg-border-linear">
-          <NumberWrapper isActive={filterTab === 'Direct Sell'}>
-            {nftCounts['Direct Sell']}
-          </NumberWrapper>
-          Buy Now
-        */}
-          All
-        </FilterCard>
-        {/* <FilterCard onClick={() => handleFilter('Auction')} className="bg-border-linear">
-          <NumberWrapper isActive={filterTab === 'Auction'}>
-            {nftCounts['Auction']}
-          </NumberWrapper>
-          Live Auction */}
-        <FilterCard  className="bg-border-linear"
-          onClick={() => handleFilter('Direct Sell')}
-          isActive={filterTab === 'Direct Sell'}
-        >
-          Buy Now
-        </FilterCard>
-        {/* <FilterCard onClick={() => handleFilter('NotSale')} className="bg-border-linear">
-          <NumberWrapper isActive={filterTab === 'NotSale'}>
-            {nftCounts['NotSale']}
-          </NumberWrapper>
-          Active Offers */}
-
-        <FilterCard  className="bg-border-linear"
-          onClick={() => handleFilter('Auction')}
-          isActive={filterTab === 'Auction'}
-        >
-          Live Auction
-        </FilterCard>
-
-        <FilterCard  className="bg-border-linear"
-          onClick={() => handleFilter('Offer')}
-          isActive={filterTab === 'Offer'}
-        >
-          Active Offers
-        </FilterCard>
+        <Link href="/explore/nfts" passHref>
+          <FilterCard isActive={true} className="bg-border-linear">
+            <CountWrapper>{countInfo.nft}</CountWrapper>All
+          </FilterCard>
+        </Link>
+        <Link href="/explore/nfts/buynow" passHref>
+          <FilterCard className="bg-border-linear">
+            <CountWrapper>{nftCounts.buynow}</CountWrapper>Buy Now
+          </FilterCard>
+        </Link>
+        <Link href="/explore/nfts/liveauction" passHref>
+          <FilterCard className="bg-border-linear">
+            <CountWrapper>{nftCounts.auction}</CountWrapper>Live Auction
+          </FilterCard>
+        </Link>
+        <Link href="/explore/nfts/activeoffer" passHref>
+          <FilterCard className="bg-border-linear">
+            <CountWrapper>{nftCounts.activeOffer}</CountWrapper>Active Offers
+          </FilterCard>
+        </Link>
       </Filter>
       {console.log("loading", loading)}
       {/* {loading ? (
@@ -255,7 +214,7 @@ const Explore = () => {
         endMessage={<h4></h4>}
       >
         <Container>
-          {filtered.map((nftInfo, index) => (
+          {nfts.map((nftInfo, index) => (
             <Link
               href={`/nft/${nftInfo.collectionId}/${nftInfo.tokenId}`}
               passHref

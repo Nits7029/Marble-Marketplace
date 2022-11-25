@@ -159,7 +159,7 @@ const DropzoneContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     padding: 20px;
   }
 `

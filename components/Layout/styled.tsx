@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { GradientBackground, SecondGradientBackground } from 'styles/styles'
 
 export const StyledWrapper = styled.div`
   color: #ffffff;
@@ -6,7 +7,14 @@ export const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #363b4e;
-
+  background: rgba(8, 12, 28, 0.6);
+  backdrop-filter: blur(20px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  justify-content: space-between;
+  padding: 0px 20px;
   @media (max-width: 1550px) {
     height: 80px;
   }
@@ -18,6 +26,7 @@ export const StyledWrapper = styled.div`
 export const StyledListForLinks = styled.div`
   row-gap: 10px;
   align-items: center;
+  height: 100%;
 `
 export const StyledLink = styled.div`
   font-size: 16px;
@@ -27,7 +36,7 @@ export const StyledLink = styled.div`
   align-items: center;
 
   @media (max-width: 1550px) {
-    margin: 0 10px;
+    margin: 0 20px;
   }
 `
 
@@ -37,13 +46,13 @@ export const StyledDivForLogo = styled.div`
   max-width:240px !important;
   width:100%;
   img {
-    width:350px;
+    width:200px;
     height:auto;
   }
   @media (max-width: 1550px) {
     margin: 0 0 0px;
     img {
-      width: 200px;
+      width: 150px;
     }
   }
   @media (max-width: 576px) {
@@ -67,16 +76,17 @@ export const CreateButton = styled.div`
   justify-content: center;
   font-weight: 600;
   font-size: 16px;
-  height: 75%;
+  height: 57px;
   @media (max-width: 1550px) {
     width: 100px;
     border-radius: 10px;
     font-size: 12px;
+    height: 37px;
   }
-  @media (max-width: 480px) {
-    height: 200px
-    font-size: 13px;
-    min-width: 100px;
+  @media (max-width: 650px) {
+    height: 36px;
+    font-size: 12px;
+    width: 80px;
     border-radius: 14px;
     margin-left: 0px;
   }
@@ -107,4 +117,26 @@ export const StyledMenuItem = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-radius: 20px;
+`
+export const MobileProfileInfo = styled(GradientBackground)`
+  &:before {
+    opacity: 0.2;
+    border-radius: 20px;
+  }
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  width: 100%;
+`
+export const AddressWrapper = styled(SecondGradientBackground)`
+  &:before {
+    border-radius: 10px;
+    opacity: 0.3;
+  }
+  display: flex;
+  p {
+    font-size: 14px;
+  }
+  padding: 10px;
+  align-items: center;
 `

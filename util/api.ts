@@ -6,6 +6,8 @@ import { toPrecision } from './numbers'
 import { BigNumber } from 'bignumber.js'
 import moment from 'moment'
 import { getCurrentWallet } from './sender-wallet'
+import { getReducedAddress } from './conversion'
+import { PINATA_SECONDARY_IMAGE_SIZE } from './constants'
 
 const config = getConfig()
 
@@ -105,52 +107,19 @@ export const getCurrentUnixTime = async (): Promise<any> => {
 
 export const getLogoUriFromAddress = async (address) => {
   try {
-    const { data } = await axios.get(`${backend_url}/get_user`, {
+    const { data } = await axios.get(`${backend_url}/get_simple_user`, {
       params: { id: address },
     })
     return {
       avatar: data.avatar
-        ? process.env.NEXT_PUBLIC_PINATA_URL + data.avatar
-        : '/default.png',
-      name: data.name || address,
+        ? process.env.NEXT_PUBLIC_PINATA_URL +
+          data.avatar +
+          PINATA_SECONDARY_IMAGE_SIZE
+        : '/default.png' + PINATA_SECONDARY_IMAGE_SIZE,
+      name: data.name || getReducedAddress(address),
     }
   } catch (err) {
     console.log('axios get logo uri error: ', err)
-    return { avatar: '/default.png', name: address }
+    return { avatar: '/default.png', name: getReducedAddress(address) }
   }
-}
-
-export const currentRefPrice = async (): Promise<any> => {
-  return await fetch(
-    getConfig().indexerUrl +
-      '/get-token-price?token_id=token.v2.ref-finance.near',
-    {
-      method: 'GET',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    }
-  )
-    .then((res) => res.json())
-    .then((priceBody) => {
-      return priceBody.price
-    })
-    .catch(() => {
-      return '-'
-    })
-}
-
-export const currentTokensPrice = async (ids: string): Promise<any> => {
-  return await fetch(
-    config.indexerUrl + '/list-token-price-by-ids?ids=' + ids,
-    {
-      method: 'GET',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    }
-  )
-    .then((res) => res.json())
-    .then((priceBody) => {
-      return priceBody
-    })
-    .catch(() => {
-      return []
-    })
 }

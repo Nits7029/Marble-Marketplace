@@ -105,6 +105,11 @@ export const MyCollectedNFTs = ({ id }) => {
   }, [id, fetchOwnedNFTs])
   const getMoreNfts = async () => {}
   const handleFilter = (id: string) => {
+    if (id == filterTab) {
+      setFilterTab('')
+      setFiltered(nfts)
+      return
+    }
     const filteredNFTs = nfts.filter((nft) => nft.saleType === id)
     setFiltered(filteredNFTs)
     setFilterTab(id)
@@ -163,9 +168,9 @@ export const MyCollectedNFTs = ({ id }) => {
 }
 
 const CollectionWrapper = styled.div`
-  // @media (max-width: 480px) {
-  //   width: fit-content;
-  // }
+  @media (max-width: 650px) {
+    width: fit-content;
+  }
 `
 
 const NftList = styled.div``
@@ -183,10 +188,10 @@ const FilterCard = styled.div`
   font-family: Mulish;
   align-items: center;
   width: fit-content;
+  padding: 10px;
   white-space:nowrap;
-  padding:15px 26px 15px 13px;
 
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 12px;
     padding:9px 22px 10px 9px;
     font-size:12px !important;

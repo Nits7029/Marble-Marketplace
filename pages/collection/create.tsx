@@ -168,9 +168,11 @@ export default function Collection() {
             transactionErrorType && failToast(txHash, transactionErrorType)
             if (!transactionErrorType && !errorType) {
               successToast(txHash)
-              nftViewFunction({
-                methodName: 'nft_get_total_series',
-                args: {},
+              const parsedLog = JSON.parse(logs)
+              createNewCollection({
+                id: parsedLog?.params?.token_series_id,
+                creator: parsedLog?.params?.creator_id,
+                category: parsedLog?.params?.token_metadata.description,
               })
                 .then((total) => {
                   console.log('inputData total: ', total)
@@ -244,10 +246,11 @@ export default function Collection() {
             <Title>Create On Marble Dao</Title>
             <Collections className="bg-border-linear">
               <Stack spacing={isMobile() ? '20px' : '50px'}>
-                <Stack className='create-col'>
+                <Stack alignItems="center" className='create-col'>
                   <CardTitle>Create A Collection</CardTitle>
                   <SubText className="create-text">Deploy a smart contract to showcase NFTs</SubText>
                 </Stack>
+                <HorizontalDivider />
                 <Stack className="set-up">
                   <SubTitle>Set Up Your Smart Contract</SubTitle>
                   <SubText>
@@ -372,47 +375,57 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   @media (max-width: 1024px) {
+    padding: 100px 50px;
+  }
+  @media (max-width: 650px) {
     padding: 10px;
   }
 `
+const HorizontalDivider = styled.div`
+  border-bottom: 1px solid #363b4e;
+  width: 100%;
+`
+
 const Title = styled.div`
   font-size: 46px;
   font-weight: 500;
   text-align: center;
   @media (max-width: 1024px) {
+    font-size: 30px;
+  }
+  @media (max-width: 650px) {
     font-size: 22px;
   }
 `
 const CardTitle = styled.div`
   font-size: 30px;
   font-weight: 500;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 20px;
-    text-align: center;
   }
 `
 const SubTitle = styled.div`
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 500;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 14px;
   }
 `
 const InputLabel = styled.div`
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
   margin-left: 30px;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 12px;
     font-weight: 400;
     margin-left:20px;
   }
 `
 const RoyaltyLabel = styled.div`
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
   margin-left: 30px;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 12px;
     margin-left: 0;
     // margin-top: 30px;
@@ -430,7 +443,7 @@ const Collections = styled.div`
   // border:1px solid rgba(255, 255, 255, 0.2);
   // background:rgba(255, 255, 255, 0.06);
   border-radius: 30px;
-  width: 1000px;
+  max-width: 1000px;
   padding: 50px;
   1px solid rgba(255, 255, 255, 0.2);
   // border-image-source: linear-gradient(
@@ -451,22 +464,19 @@ const Collections = styled.div`
 const SubText = styled.div`
   font-size: 18px;
   font-family: Mulish;
-  font-weight: 500;
-  max-width: 590px;
-  margin-top: 12px !important;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 14px;
     font-weight: 400;
   }
 `
 const StyledLink = styled.a`
+  padding-top: 10px;
   font-size: 18px;
   font-family: Mulish;
   font-weight: 500;
   color: #cccccc;
-  text-decoration:underline;
-  margin-top:20px !important;
-  @media (max-width: 480px) {
+  text-decoration: underline;
+  @media (max-width: 1024px) {
     font-size: 14px;
     font-weight: 400;
   }
@@ -481,7 +491,7 @@ const StyledInput = styled.input`
   padding: 20px 25px;
   font-size: 20px;
   font-family: Mulish;
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     font-size: 16px;
     padding:15px 20px;
   }

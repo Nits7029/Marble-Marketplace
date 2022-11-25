@@ -13,25 +13,38 @@ import { nftViewFunction } from 'util/near'
 import { NftCollection } from 'services/nft'
 import SelectedNFT from './components/SelectedNFT'
 import Collection from './components/Collection'
-import { isMobile } from 'util/device'
+import { isMobile, isPC } from 'util/device'
+import { SecondGradientBackground } from 'styles/styles'
+
+const collectionList = [27, 111, 112]
 
 const Home = () => {
   const [nftcollections, setNftCollections] = useState<NftCollection[]>([])
 
   const fetchCollections = async () => {
-    try {
-      const data = await nftViewFunction({
-        methodName: 'nft_get_series',
-        args: {
-          from_index: '0',
-          limit: 3,
-        },
+    // const data = await nftViewFunction({
+    //   methodName: 'nft_get_series',
+    //   args: {
+    //     from_index: '111',
+    //     limit: 1,
+    //   },
+    // })
+    const data = await Promise.all(
+      collectionList.map(async (collection_id) => {
+        try {
+          const _collectionInfo = await nftViewFunction({
+            methodName: 'nft_get_series_single',
+            args: {
+              token_series_id: collection_id.toString(),
+            },
+          })
+          return _collectionInfo
+        } catch (err) {
+          return {}
+        }
       })
-      return data
-    } catch (error) {
-      console.log('nft_get_series Error: ', error)
-      return []
-    }
+    )
+    return data
   }
 
   useEffect(() => {
@@ -39,7 +52,6 @@ const Home = () => {
     ; (async () => {
       let collections = []
       let res_categories = await fetch(process.env.NEXT_PUBLIC_CATEGORY_URL)
-      let { categories } = await res_categories.json()
       const collectionList = await fetchCollections()
       for (let i = 0; i < collectionList.length; i++) {
         let res_collection: any = {}
@@ -58,8 +70,8 @@ const Home = () => {
           collection_info.banner_image =
             process.env.NEXT_PUBLIC_PINATA_URL + res_collection.logo
           collection_info.slug = res_collection.slug
-          collection_info.creator = res_collection.owner ?? ''
-          collection_info.cat_ids = categories[res_collection.category].name
+          collection_info.creator = collectionList[i].creator_id ?? ''
+          collection_info.cat_ids = 'All'
           collections.push(collection_info)
         } catch (err) {
           console.log('err', err)
@@ -84,14 +96,15 @@ const Home = () => {
           <Paper>
             <MarbleCardGrid>
               <Stack spacing={10} className="pygital-nft">
-                <Title>Discover 
-                  <span className='phgital-content'>Phygital NFTs</span>
+                <Title>
+                  <span style={{ fontWeight: '500' }}>Discover</span> Phygital
+                  NFTs
                 </Title>
                 <TextContent textAlign={isMobile() ? 'center' : 'left'}>
-                  Marble, the future of NFTs is already here. Collect Phygital
-                  NFTs which bring real Art to life in spectacular 3D. Enjoy
-                  sculptures, paintings, and physical artworks through Augmented
-                  Reality and Virtual Reality.
+                  Here at Marble DAO, the future of NFTs is already here.
+                  Collect Phygital NFTs which bring real Art to life in
+                  spectacular 3D. Enjoy sculptures, paintings, and physical
+                  artworks through Augmented Reality and Virtual Reality.
                 </TextContent>
                 <StyledButton>Get Started</StyledButton>
               </Stack>
@@ -103,7 +116,7 @@ const Home = () => {
         </Flex>
         <Stack marginTop="100px" alignItems="center" className='marble-content p-20'>
           <Stack spacing={10}>
-            <Stack margin="0 auto" alignItems="center">
+            <Stack margin="0 auto" alignItems="center" spacing="30px">
               <TextTitle>Marble - Where will you fit in?</TextTitle>
               <StyledP>
                 Marble is an all-in-one platform hosting an NFT marketplace as
@@ -118,7 +131,7 @@ const Home = () => {
                 <Round>
                   <StyledImg src="/images/createIcon.svg" alt="create" />
                 </Round>
-                <Stack spacing={isMobile() ? '5px' : 5}>
+                <Stack spacing={isPC() ? 5 : '5px'}>
                   <h1>Create</h1>
                   <TextContent>
                     Mint NFTs in stunning Augmented Reality (AR) and Virtual
@@ -130,7 +143,7 @@ const Home = () => {
                 <Round>
                   <StyledImg src="/images/earnIcon.svg" alt="earn" />
                 </Round>
-                <Stack spacing={isMobile() ? '5px' : 5}>
+                <Stack spacing={isPC() ? 5 : '5px'}>
                   <h1>Earn</h1>
                   <TextContent>
                     Accrue royalties on secondary NFT sales using our smart
@@ -142,7 +155,7 @@ const Home = () => {
                 <Round>
                   <StyledImg src="/images/followIcon.svg" alt="follow" />
                 </Round>
-                <Stack spacing={isMobile() ? '5px' : 5}>
+                <Stack spacing={isPC() ? 5 : '5px'}>
                   <h1>Follow</h1>
                   <TextContent>
                     Keep an eye on your favourite NFT creators with Marble
@@ -171,7 +184,11 @@ const Home = () => {
                 <StyledImg src="/images/cosmos.svg" alt="cosmos" />
               </PartnerPaper>
               <PartnerPaper className="bg-border-linear">
-                <StyledImg src="/images/juno-icon.png" alt="juno" />
+                <StyledImg
+                  src="/images/juno.svg"
+                  alt="juno"
+                  style={{ width: '150px' }}
+                />
               </PartnerPaper>
               <PartnerPaper className="bg-border-linear">
                 <StyledImg src="/images/pinata.svg" alt="pinata" />
@@ -186,13 +203,8 @@ const Home = () => {
 const DestinationGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 30px;
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap:30px;
-  }
-
-  @media (max-width: 576px) {
+  column-gap: 20px;
+  @media (max-width: 800px) {
     display: flex;
     flex-direction: column;
     row-gap: 15px;
@@ -204,20 +216,8 @@ const PartnerGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 30px;
   overflow: auto;
-  margin-top:20px !important;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  @media (max-width: 992px) {
-    display:flex;
-    overflow-x:auto;
-    max-width:400px;
-    margin:0 10px;
-  }
-
-  @media (max-width: 480px) {
-    width:370px;
-    column-gap: 20px;
+  @media (max-width: 650px) {
+    width: 90vw;
   }
 `
 const StyledButton = styled.button`
@@ -229,8 +229,8 @@ const StyledButton = styled.button`
   inset 0px 7px 8px rgba(0, 0, 0, 0.2);
   color: black;
   font-size: 18px;
-  font-weight: 500;
-  @media (max-width: 576px) {
+  font-weight: bold;
+  @media (max-width: 650px) {
     width: 100%;
     height: 56px !important;
     font-size: 16px;
@@ -243,11 +243,12 @@ const MarbleCardGrid = styled.div`
   @media (max-width: 1550px) {
     padding: 0 30px;
   }
-  @media (max-width: 768px) {
-    flex-wrap:wrap;
-  }
-  @media (max-width: 768px) {
-    padding: 0;
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column-reverse;
+    * {
+      align-items: center;
+    }
   }
 `
 const StyledImg = styled.img`
@@ -255,6 +256,10 @@ const StyledImg = styled.img`
 `
 const Container = styled.div`
   color: white;
+  @media (max-width: 1550px) {
+    max-width: 1100px;
+    margin-inline: auto;
+  }
 `
 const StyledP = styled.div`
   color: white;
@@ -263,13 +268,14 @@ const StyledP = styled.div`
   opacity: 0.5;
   font-family: Mulish;
   text-align: center;
-  margin:0 auto !important;
-  margin-bottom:30px !important;
-  max-width: 1033px;
-  @media (max-width: 1450px) {
+  width: 1000px;
+  @media (max-width: 1550px) {
     font-size: 18px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 1050px) {
+    width: 100%;
+  }
+  @media (max-width: 650px) {
     font-size: 16px;
     padding: 0 20px;
     width: 100%;
@@ -284,18 +290,17 @@ const Collections = styled.div`
     padding:30px 0 20px;
   }
 `
-const Paper = styled.div<{ width?: string }>`
-  border-radius: 30px;
-  padding: 30px 80px;
-  padding-bottom: 40px;
+
+const Paper = styled(SecondGradientBackground)<{ width?: string }>`
+  &:before {
+    border-radius: 30px;
+    opacity: 0.3;
+  }
+  padding: 40px 80px;
   width: ${({ width }) => width || '100%'};
   display: flex;
   align-items: center;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  
-  @media (max-width: 1450px) {
+  @media (max-width: 1550px) {
     padding: 20px;
     display: block;
   }
@@ -304,43 +309,43 @@ const Paper = styled.div<{ width?: string }>`
   }
 `
 const PartnerPaper = styled(Paper)`
-padding: 3px 28px !important;
-@media (max-width: 992px) {
-  min-width: 180px;
-  height: 70px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-@media (max-width: 480px) {
-  min-width: 140px;
-  height: 60px;
-}
+    padding: 3px 28px !important;
+      @media (max-width: 992px) {
+      min-width: 180px;
+      height: 70px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+  @media (max-width: 650px) {
+    width: 120px;
+    height: 50px;
+  }
 `
-const StyledPaper = styled.div`
-  border-radius: 30px;
-  // background: rgba(255, 255, 255, 0.06);
-  // border: 1px solid rgba(255, 255, 255, 0.2);
-  // box-shadow: 0px 7px 14px 0px #0000001a;
-  // backdrop-filter: blur(30px);
+const StyledPaper = styled(SecondGradientBackground)`
+  &:before {
+    opacity: 0.5;
+    border-radius: 30px;
+  }
   justify-content: center;
-  padding: 40px 25px;
+  padding: 40px 60px;
   flex-direction: column;
   h1 {
     font-size: 36px;
     font-weight: 500;
     text-align: center;
   }
-  @media (max-width: 1450px) {
-    padding: 40px 40px;
+  @media (max-width: 1550px) {
+    padding: 40px 30px;
   }
-  @media (max-width: 480px) {
-    display: flex;
-    flex-direction: row;
-    padding: 14px;
+  @media (max-width: 800px) {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: auto auto;
+    padding: 10px;
     align-items: center;
     column-gap: 10px;
-    justify-content: start;
     h1 {
       font-size: 20px;
       font-weight: 500;
@@ -358,9 +363,10 @@ const TextTitle = styled.div`
   margin-bottom:20px;
   text-align: center;
   @media (max-width: 1550px) {
-    font-size: 40px;
+    font-size: 35px;
+    font-weight: 500;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 24px;
     margin-bottom:0;
     margin-top:50px;
@@ -373,12 +379,11 @@ const TextContent = styled.div<{ textAlign?: string }>`
   font-weight: 300;
   opacity: 0.5;
   font-family: Mulish;
-  @media (max-width: 1440px) {
+  @media (max-width: 1550px) {
     font-size: 20px;
   }
-  @media (max-width: 480px) { 
-    font-size: 15px;
-    margin-top:8px !important;
+  @media (max-width: 650px) {
+    font-size: 16px;
   }
 `
 
@@ -390,19 +395,8 @@ const Round = styled.div`
   align-items: center;
   border-radius: 50%;
   margin: 50px auto;
-
-  @media (max-width: 768px) {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
-    img {
-      width: 65px;
-      height: 50px;
-    }
-  }
-  @media (max-width: 480px) {
-    max-width: 70px;
-    width:100%;
+  @media (max-width: 800px) {
+    width: 70px;
     height: 70px;
     margin: 0;
     img {
@@ -412,12 +406,12 @@ const Round = styled.div`
   }
 `
 const Title = styled.div`
-  font-size: 50px;
+  font-size: 65px;
   font-weight: 400;
   @media (max-width: 1550px) {
     font-size: 40px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 30px;
     text-align: center;
   }

@@ -153,8 +153,8 @@ const DropzoneContainer = styled.div`
 `
 const ImageWrapper = styled.div`
   padding: 80px;
-  @media (max-width: 576px) {
-    padding: 0 40px 10px;
+  @media (max-width: 650px) {
+    padding: 40px;
   }
 `
 export default NFTUpload

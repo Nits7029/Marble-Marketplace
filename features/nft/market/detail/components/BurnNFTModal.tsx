@@ -69,11 +69,11 @@ const Container = styled(ModalContent)`
   border-radius: 30px !important;
   padding:100px 80px 100px 50px;
   color: white !important;
-  max-width: 1320px !important;
-  max-height: 760px;
-  height:100%;
-  margin:0 !important;
-  @media (max-width: 1024px) {
+  overflow: hidden;
+  position: relative;
+  max-width: 1000px !important;
+  margin: 50px;
+  @media (max-width: 650px) {
     width: 90vw !important;
     padding: 10px;
     max-height: 720px;
@@ -82,8 +82,8 @@ const Container = styled(ModalContent)`
 `
 const Title = styled.div`
   font-size: 30px;
-  font-weight: 600;
-  @media (max-width: 480px) {
+  font-weight: 700;
+  @media (max-width: 650px) {
     font-size: 20px;
   }
 `
@@ -96,7 +96,7 @@ const MainWrapper = styled.div`
     font-size: 20px;
     font-family: Mulish;
   }
-  @media (max-width: 1024px) {
+  @media (max-width: 650px) {
     flex-direction: column-reverse;
     padding:20px 5px;
     overflow: auto;
@@ -112,7 +112,6 @@ const CardWrapper = styled.div`
   @media (max-width: 1024px) {
     margin: 0 auto;
     margin-bottom:30px;
-
   }
   @media (max-width: 480px) {
     width: 100%;

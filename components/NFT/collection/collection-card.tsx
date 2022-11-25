@@ -5,21 +5,32 @@ import { NftCollection } from 'services/nft'
 import { RoundedIconComponent } from 'components/RoundedIcon'
 import { isClientMobie } from 'util/device'
 import styled from 'styled-components'
+import { GradientBackground } from 'styles/styles'
+import {
+  PINATA_PRIMARY_IMAGE_SIZE,
+  PINATA_SECONDARY_IMAGE_SIZE,
+} from 'util/constants'
 
 export default function NftCollectionCard({ collection }): JSX.Element {
   return (
     <CollectionDiv className="collection bg-border-linear">
       <ImgDiv className="nft-img-div">
-        <Image src={collection.image} alt="NFT Image" />
+        <Image
+          src={collection.image + PINATA_PRIMARY_IMAGE_SIZE}
+          alt="NFT Image"
+        />
       </ImgDiv>
       <HStack marginTop="30px">
-        <Logo src={collection.banner_image} alt="image" size="70px" />
+        <Logo
+          src={collection.banner_image + PINATA_SECONDARY_IMAGE_SIZE}
+          alt="image"
+        />
         <Stack>
           <Title>{collection.name}</Title>
           <RoundedIconComponent
             size="0px"
             address={collection.creator}
-            font={isClientMobie ? '15px' : '20px'}
+            font={isClientMobie ? '15px' : '15px'}
           />
         </Stack>
       </HStack>
@@ -27,20 +38,20 @@ export default function NftCollectionCard({ collection }): JSX.Element {
   )
 }
 
-const CollectionDiv = styled.div`
-  border-radius: 20px;
-  padding: 30px;
-  height: 100%;
-  cursor: pointer;
-  min-width: 406px;
-  width: 100%;
-  @media (max-width: 1450px) {
-    padding: 15px;
-  }
-  @media (max-width: 480px) {
-    width: 320px;
-  }
-`
+// const CollectionDiv = styled.div`
+//   border-radius: 20px;
+//   padding: 30px;
+//   height: 100%;
+//   cursor: pointer;
+//   min-width: 406px;
+//   width: 100%;
+//   @media (max-width: 1450px) {
+//     padding: 15px;
+//   }
+//   @media (max-width: 480px) {
+//     width: 320px;
+//   }
+// `
 
 const ImgDiv = styled.div`
   width: 100%;
@@ -61,16 +72,35 @@ const Image = styled.img`
   object-position: center;
   border-radius: 20px;
 `
-const Logo = styled.img<{ size: string }>`
-  width: ${({ size }) => size};
-  height: ${({ size }) => size};
+const Logo = styled.img`
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit:cover;
+  @media (max-width: 1550px) {
+    width: 50px;
+    height: 50px;
+  }
 `
 const Title = styled.div`
   font-size: 24px;
   overflow-wrap: anywhere;
   @media (max-width: 1450px) {
     font-size: 18px;
+  }
+`
+const CollectionDiv = styled(GradientBackground)`
+  &:before {
+    border-radius: 20px;
+    opacity: 0.2;
+  }
+  padding: 30px;
+  height: 100%;
+  cursor: pointer;
+  @media (max-width: 1450px) {
+    padding: 15px;
+  }
+  @media (max-width: 1024px) {
+    width: 320px;
   }
 `

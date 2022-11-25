@@ -60,15 +60,15 @@ const ConnectWalletContainer = styled.div`
   padding: 14px 34px;
   white-space: nowrap;
   margin-left:auto;
-
+  height: 57px;
   @media (max-width: 1550px) {
-    height: 75%;
+    height: 37px;
     width: 150px;
     border-radius: 10px;
     font-size: 12px;
     
   }
-  @media (max-width: 768px) {
+  @media (max-width: 650px) {
     height: 48px;
     margin-left: 0;
   }

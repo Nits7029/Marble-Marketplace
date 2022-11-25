@@ -8,7 +8,8 @@ export const RoundedIcon = styled.img<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
   border-radius: 50%;
-  border: 1px solid #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  object-fit: cover;
   @media (max-width:576px){
     width:50px;
     height:50px;
@@ -62,8 +63,8 @@ export const RoundedBidIconComponent = ({ size, address, font = '14px' }) => {
     })()
   }, [address])
   return (
-    <Link href={`/profile/${address}`}>
-      <HStack style={{ cursor: 'pointer' }} >
+    <Link href={`/profile/${address}`} passHref>
+      <HStack style={{ cursor: 'pointer' }}>
         <RoundedIcon size={size} src={src} />
         <Stack className='ml-3'>
           <Text fontSize="14px" fontWeight="100">Bid By</Text>

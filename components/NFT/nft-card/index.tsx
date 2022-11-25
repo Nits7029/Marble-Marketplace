@@ -3,9 +3,13 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import DateCountdown from 'components/DateCountdownMin'
 import { useTokenInfoFromAddress } from 'hooks/useTokenInfo'
-import { convertMicroDenomToDenom } from 'util/conversion'
-import { getProfileInfo } from 'hooks/useProfile'
+import { getSimpleProfileInfo } from 'hooks/useProfile'
 import { getReducedAddress } from 'util/conversion'
+import { GradientBackground } from 'styles/styles'
+import {
+  PINATA_PRIMARY_IMAGE_SIZE,
+  PINATA_SECONDARY_IMAGE_SIZE,
+} from 'util/constants'
 
 const saleType = {
   NotSale: 'Not On Sale',
@@ -25,28 +29,58 @@ export function NftCard({ nft, id, type }): JSX.Element {
   const tokenInfo = useTokenInfoFromAddress(nft.ft_token_id)
   const [profile, setProfile] = useState<any>({})
   useEffect(() => {
-    ; (async () => {
-      const profile_info = await getProfileInfo(nft.owner)
+    ;(async () => {
+      const profile_info = await getSimpleProfileInfo(nft.owner)
       setProfile(profile_info)
     })()
   }, [nft])
 
   return (
     <NftCardDiv
-      className="bg-border-linear"
       color={backgroundColor[nft.saleType]}
       revertColor={nft.saleType === 'Direct Sell'}
+      className="bg-border-linear"
     >
       <ChakraProvider>
         <ImgDiv className="nft-img-url">
-          <Image src={nft.image} alt="NFT Image" />
+          <Image src={nft.image + PINATA_PRIMARY_IMAGE_SIZE} alt="NFT Image" />
         </ImgDiv>
-
-        <Stack className='card-padding'>
+        <Stack paddingTop="15px"  className='card-padding'>
           <Flex justifyContent="space-between" alignItems="flex-start">
-            <div>
-              <NFTName>{nft.name}</NFTName>
-              <Title className={`${nft.saleType === 'Direct Sell' ? 'text-color': ''} ${nft.saleType==="NotSale" ? 'not-on-sale':''}`}>{saleType[nft.saleType]}</Title>
+            <NFTName>{nft.name}</NFTName>
+            <HStack>
+              <Logo
+                src={
+                  profile.avatar
+                    ? `${
+                        process.env.NEXT_PUBLIC_PINATA_URL + profile.avatar
+                      }${PINATA_SECONDARY_IMAGE_SIZE}`
+                    : '/default.png' + PINATA_SECONDARY_IMAGE_SIZE 
+                }
+                alt="logo"
+                size="34px"
+              />
+              <p>{profile.name || getReducedAddress(nft.owner)}</p>
+            </HStack>
+          </Flex>
+          <Flex justifyContent="space-between" paddingTop="10px 0">
+            <Stack>
+              <Title>{saleType[nft.saleType]}</Title>
+              {tokenInfo && (
+                <Flex alignItems="center">
+                  <Value>{nft.highest_bid || nft.price}</Value>
+                  &nbsp;
+                  <img
+                    src={tokenInfo.logoURI + PINATA_SECONDARY_IMAGE_SIZE}
+                    alt="token"
+                    width="20px"
+                    height="20px"
+                    style={{ borderRadius: '50%' }}
+                  />
+                </Flex>
+              )}
+            </Stack>
+            {(nft.saleType === 'Auction' || nft.saleType == 'Offer') && (
               <Stack>
                 {tokenInfo && (
                   <Flex alignItems="center">
@@ -108,11 +142,20 @@ export function NftCard({ nft, id, type }): JSX.Element {
   )
 }
 
-const NftCardDiv = styled.div<{ color: string; revertColor: boolean }>`
+const NftCardDiv = styled(GradientBackground)<{
+  color: string
+  revertColor: boolean
+}>`
+  &:before {
+    border-radius: 20px;
+    opacity: 0.2;
+  }
+  background: ${({ color }) => color};
   border-radius: 20px;
   padding: 30px;
   height: 100%;
   width: 100%;
+  min-width: 320px;
   cursor: pointer;
   color: ${({ revertColor }) => (revertColor ? 'black' : 'white')};
   @media (max-width: 1550px) {
@@ -128,9 +171,8 @@ const NftCardDiv = styled.div<{ color: string; revertColor: boolean }>`
       font-size: 14px;
     }
   }
-  .ml-2{
-    margin-left:10px;
-    font-weight:100;
+  @media (max-width: 800px) {
+    width: 320px;
   }
 
 `

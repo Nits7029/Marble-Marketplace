@@ -19,7 +19,10 @@ import {
 } from 'util/near'
 import { getCurrentWallet } from 'util/sender-wallet'
 import { getRandomInt } from 'util/numbers'
-import { convertToFixedDecimalNumber } from 'util/conversion'
+import {
+  convertToFixedDecimalNumber,
+  convertMicroDenomToDenom,
+} from 'util/conversion'
 import {
   Container,
   Header,
@@ -31,6 +34,7 @@ import {
   ButtonWrapper,
   OwnedNftsContainer,
   CountDownWrapper,
+  StyledButton,
 } from './styled'
 
 interface UserStakeInfoType {
@@ -52,6 +56,7 @@ interface StakeConfigType {
   nft_address: string
   collection_number: string
   total_supply: number
+  end_date: number
 }
 
 interface CollectionType {
@@ -87,6 +92,7 @@ const Staking = () => {
     nft_address: '',
     collection_number: '',
     total_supply: 0,
+    end_date: 0,
   })
   const [collection, setCollection] = useState<CollectionType>({
     image: '/marblenauts.gif',
@@ -177,15 +183,20 @@ const Staking = () => {
     if (userStakeInfo.create_unstake_timestamp !== 0)
       return userStakeInfo.unclaimed_amount
     if (stakeConfig.total_supply === 0) return 0
+    const end_date =
+      Date.now() / 1000 > stakeConfig.end_date
+        ? stakeConfig.end_date
+        : Date.now() / 1000
+    if (end_date < userStakeInfo.last_timestamp)
+      return convertToFixedDecimalNumber(userStakeInfo.unclaimed_amount)
     const claimable =
       userStakeInfo.unclaimed_amount +
       (Math.floor(
         Math.abs(
-          (Date.now() / 1000 - userStakeInfo.last_timestamp) /
-            stakeConfig.interval
+          (end_date - userStakeInfo.last_timestamp) / stakeConfig.interval
         )
       ) *
-        stakeConfig.daily_reward *
+        convertMicroDenomToDenom(stakeConfig.daily_reward, 8) *
         userStakeInfo.token_ids.length) /
         stakeConfig.total_supply
 
@@ -198,9 +209,14 @@ const Staking = () => {
     )
       return 0
     const dailyReward =
-      (stakeConfig.daily_reward * userStakeInfo.token_ids.length) /
+      (convertMicroDenomToDenom(stakeConfig.daily_reward, 8) *
+        userStakeInfo.token_ids.length) /
       stakeConfig.total_supply
     return convertToFixedDecimalNumber(dailyReward)
+  }
+
+  const getLeftDays = () => {
+    return ((stakeConfig.end_date - Date.now() / 1000) / 86400).toFixed(0)
   }
   const handleStake = async () => {
     if (ownedNfts.length === 0) return
@@ -302,30 +318,28 @@ const Staking = () => {
         <CollectionContent>
           <h1>{collection.name}</h1>
           <StakingInfoContainer>
-              <InfoContent>
-                <h2>Daily Rewards</h2>
-                <h3>
-                  {getDailyRewards()}
-                  Block/Day
-                </h3>
-              </InfoContent>
-              <InfoContent>
-                <h2>Claimable Reward</h2>
-                <h3>{getClaimableReward()} Block</h3>
-              </InfoContent>
-            </StakingInfoContainer>
-            <StakingInfoContainer>
-              <InfoContent>
-                <h2>Total Staked</h2>
-                <h3>
-                  {userStakeInfo.token_ids.length}/
-                  {ownedNfts.length + userStakeInfo.token_ids.length}
-                </h3>
-              </InfoContent>
-              <InfoContent>
-                <h2>Days Left</h2>
-                <h3>9</h3>
-              </InfoContent>
+            <InfoContent>
+              <h2>Daily Rewards</h2>
+              <h3>
+                {getDailyRewards()}
+                Hera/Day
+              </h3>
+            </InfoContent>
+            <InfoContent>
+              <h2>Claimable Reward</h2>
+              <h3>{getClaimableReward()} Hera</h3>
+            </InfoContent>
+            <InfoContent>
+              <h2>Total Staked</h2>
+              <h3>
+                {userStakeInfo.token_ids.length}/
+                {ownedNfts.length + userStakeInfo.token_ids.length}
+              </h3>
+            </InfoContent>
+            <InfoContent>
+              <h2>Days Left</h2>
+              <h3>{getLeftDays()}</h3>
+            </InfoContent>
           </StakingInfoContainer>
           {userStakeInfo.create_unstake_timestamp !== 0 && (
             <CountDownWrapper>
@@ -343,32 +357,14 @@ const Staking = () => {
           )}
           <ButtonWrapper>
             {userStakeInfo.create_unstake_timestamp === 0 && (
-              <Button
-                className="btn-buy btn-default mobile-btn"
-                css={{
-                  background: '$white',
-                  color: '$black',
-                  stroke: '$black',
-                  padding: '15px auto',
-                  fontWeight:"500",
-                  width: "230px",
-                }}
+              <StyledButton
                 disabled={ownedNfts.length === 0}
                 onClick={handleStake}
               >
                 Stake
-              </Button>
+              </StyledButton>
             )}
-            <Button
-              className="btn-buy btn-default mobile-btn"
-              css={{
-                background: '$white',
-                color: '$black',
-                stroke: '$black',
-                padding: '15px auto',
-                fontWeight:"500",
-                width: "230px",
-              }}
+            <StyledButton
               disabled={
                 userStakeInfo.create_unstake_timestamp + stakeConfig.lock_time >
                   Date.now() / 1000 || userStakeInfo.token_ids.length === 0
@@ -378,26 +374,17 @@ const Staking = () => {
               {userStakeInfo.create_unstake_timestamp === 0
                 ? 'Unstake'
                 : 'Fetch Nft'}
-            </Button>
-            <Button
-              className="btn-buy btn-default mobile-btn"
-              css={{
-                background: '$white',
-                color: '$black',
-                stroke: '$black',
-                padding: '15px auto',
-                fontWeight:"500",
-                width: "230px",
-              }}
+            </StyledButton>
+            <StyledButton
               disabled={getClaimableReward() === 0}
               onClick={handleClaim}
             >
               Claim Rewards
-            </Button>
+            </StyledButton>
           </ButtonWrapper>
         </CollectionContent>
       </StakingCardWrapper>
-      <OwnedNftsContainer>
+      {/* <OwnedNftsContainer>
         {ownedNfts.map((_nft, index) => (
           <CollectionCard
             collection={{
@@ -409,7 +396,7 @@ const Staking = () => {
             key={index}
           />
         ))}
-      </OwnedNftsContainer>
+      </OwnedNftsContainer> */}
     </Container>
   )
 }

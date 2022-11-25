@@ -18,6 +18,14 @@ import {
   NFT_CONTRACT_NAME,
 } from 'util/near'
 import { isClientMobie, isMobile } from 'util/device'
+import {
+  formatChakraDateToTimestamp,
+  formatTimestampToDate,
+  convertMicroDenomToDenom,
+  formatNearToYocto,
+  formatHera,
+} from 'util/conversion'
+import { SecondGradientBackground } from 'styles/styles'
 
 const CollectionInfo = ({ info }) => {
   const [nfts, setNfts] = useState([])
@@ -88,7 +96,7 @@ const CollectionInfo = ({ info }) => {
   return (
     <Container className="bg-border-linear">
       <ChakraProvider>
-        <Flex justifyContent="space-between" className="collection-card-grid">
+        <Flex justifyContent="space-between" padding="20px 20px 0 30px"  className="collection-card-grid">
           <HStack>
             <ImgDiv>
               <Image src={info.image} alt="collection" />
@@ -118,7 +126,7 @@ const CollectionInfo = ({ info }) => {
           overflowY="unset"
           padding="30px 0" className='grid-collection'
         >
-          {nfts.slice(0, 4).map((nftInfo, index) => (
+          {nfts.slice(0, 3).map((nftInfo, index) => (
             <Link
               href={`/nft/${nftInfo.collectionId}/${nftInfo.tokenId}`}
               passHref
@@ -151,18 +159,14 @@ const CollectionInfo = ({ info }) => {
   )
 }
 
-const Container = styled.div`
-  border-radius: 30px;
-  // background: rgba(255, 255, 255, 0.06);
-  // border: 1px solid rgba(255, 255, 255, 0.2);
-  // box-shadow: 0px 7px 14px 0px #0000001a;
-  // backdrop-filter: blur(30px);
-  margin: 10px 0;
-  padding: 40px;
-  width: 100%;
-  @media (max-width: 1550px) {
-    padding: 20px;
+const Container = styled(SecondGradientBackground)`
+  &:before {
+    opacity: 0.3;
+    border-radius: 30px;
   }
+  backdrop-filter: blur(30px);
+  margin: 10px 0;
+  width: 100%;
 `
 const Image = styled.img`
   position: absolute;
@@ -193,9 +197,8 @@ const ImgDiv = styled.div`
   @media (max-width: 1024px) {
     width: 100px;
   }
-  @media (max-width: 480px) {
-    width: 55px;
-    height:50px;
+  @media (max-width: 650px) {
+    width: 50px;
     padding-bottom: 50px;
     margin-right:10px;
   }
@@ -209,12 +212,11 @@ const CreatorInfo = styled.div`
   width: 210px;
   @media (max-width: 1550px) {
     height: 50px;
-    width: 160px;
-    height: 50px;
+    width: fit-content;
     margin-top: 20px;
   }
-  @media (max-width: 1024px) {
-    height: 65px;
+  @media (max-width: 650px) {
+    margin: 5px 30px;
   }
 `
 const Title = styled.div`
@@ -223,7 +225,7 @@ const Title = styled.div`
   @media (max-width: 1550px) {
     font-size: 23px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     font-size: 16px;
   }
 `

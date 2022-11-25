@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { SecondGradientBackground } from 'styles/styles'
 
 const Card = ({ title, children }) => {
   return (
@@ -10,18 +11,22 @@ const Card = ({ title, children }) => {
   )
 }
 
-const Container = styled.div`
-  padding: 30px 36px;
+const Container = styled(SecondGradientBackground)`
+  padding: 30px;
   width: 100%;
-  @media (max-width: 480px) {
+  &:before {
+    border-radius: 30px;
+    opacity: 0.3;
+  }
+  @media (max-width: 650px) {
     padding: 15px 20px;
     margin-top:20px !important;
   }
 `
 const Title = styled.div`
   font-size: 20px;
-  font-weight: 500;
-  @media (max-width: 480px) {
+  font-weight: 700;
+  @media (max-width: 650px) {
     font-size: 16px;
     margin-bottom:10px;
   }

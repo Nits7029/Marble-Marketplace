@@ -232,9 +232,9 @@ export default function getConfig(
         NFT_CONTRACT_NAME: 'marblenft.marbledao.testnet',
         MARKETPLACE_CONTRACT_NAME: 'marketplace.marbledao.testnet',
         HERA_CONTRACT_NAME: 'hera.cmdev0.testnet',
-        STAKING_CONTRACT_NAME: 'staking.marblestaking.testnet',
+        STAKING_CONTRACT_NAME: 'staking2.marblestaking.testnet',
         STAKING_NFT_NAME: 'nft.marblestaking.testnet',
-        STAKING_FT_NAME: 'ft.marblestaking.testnet',
+        STAKING_FT_NAME: 'hera.cmdev0.testnet',
       }
     default:
       return {

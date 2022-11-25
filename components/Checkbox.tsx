@@ -10,7 +10,6 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })<{ size?: String }>`
   width: ${({ size }) => size || '30px'};
   vertical-align: middle;
   transition: background-color 0.2s ease-in-out;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   background-color: #fff;
   // box-shadow: 0px 4px 40px rgba(42, 47, 50, 0.09), inset 0px 7px 24px #6d6d78;

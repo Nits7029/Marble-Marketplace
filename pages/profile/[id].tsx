@@ -30,6 +30,7 @@ import EditProfileModal from 'features/profile/EditProfileModal'
 import { getCurrentWallet } from 'util/sender-wallet'
 import { getReducedAddress } from 'util/conversion'
 import { isMobile } from 'util/device'
+import { GradientBackground } from 'styles/styles'
 
 export default function Home() {
   const { asPath } = useRouter()
@@ -96,7 +97,6 @@ export default function Home() {
     <AppLayout fullWidth={true} hasBanner={true}>
       <Container>
         <Banner>
-          {/* <BannerImage src={profile.banner || default_image} alt="banner" /> */}
           <BannerImageUpload
             hash={profile.banner}
             setHash={handleSetHash}
@@ -118,12 +118,12 @@ export default function Home() {
                 <h1>{profile.name || getReducedAddress(id)}</h1>
                 <HStack justifyContent="space-around">
                   <Stack>
-                    <h1>{profile.following && profile.following.length}</h1>
+                    <h1>{profile.followers && profile.followers.length}</h1>
                     <p>Following</p>
                   </Stack>
                   <VerticalDivider />
                   <Stack>
-                    <h1>{profile.followers && profile.followers.length}</h1>
+                    <h1>{profile.following && profile.following.length}</h1>
                     <p>Followers</p>
                   </Stack>
                 </HStack>
@@ -224,7 +224,7 @@ const Banner = styled.div`
   width: 100%;
   display: block;
   z-index: 10;
-  @media (max-width: 1024px) {
+  @media (max-width: 650px) {
     height: 216px;
     min-height:273px;
   }
@@ -235,18 +235,16 @@ const LogoImage = styled.div`
   border-radius: 50%;
   border: 7px solid #ffffff;
   position: absolute;
-  z-index: 999;
-  top: 0;
-  left: 50%;
-  transform: translate(-50% , -50%);
-
-  @media (max-width: 1024px) {
-    width: 182px;
-    height: 182px;
-    top: -10px;
+  top: -100px;
+  left: calc(50% - 100px);
+  z-index: 1000;
+  @media (max-width: 1550px) {
+    width: 150px;
+    height: 150px;
+    top: -75px;
+    left: calc(50% - 75px);
   }
-
-  @media (max-width: 480px) {
+  @media (max-width: 650px) {
     width: 120px;
     height: 120px;
     top: -60px;
@@ -257,8 +255,8 @@ const LogoImage = styled.div`
 `
 const ProfileContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  padding: 0px 49px 0px;
+  grid-template-columns: 1fr 2.5fr;
+  padding: 0 50px;
   p {
     font-size: 18px;
     font-weight: 400;
@@ -281,11 +279,7 @@ const ProfileContainer = styled.div`
     font-weight: 600;
     text-align: center;
   }
-  @media (max-width: 1024px) {
-    padding:0px 0;
-    display:block !important;
-  }
-  @media (max-width: 480px) {
+  @media (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     h1 {
@@ -299,13 +293,19 @@ const ProfileContainer = styled.div`
     }
   }
 `
-const ProfileInfo = styled.div`
-  padding: 180px 50px 50px 50px;
-  width:640px;
-  border-radius: 0 !important;
+const ProfileInfo = styled(GradientBackground)`
+  padding: 120px 50px 50px 50px;
+
+  &:before {
+    border-radius: 0px 0px 20px 20px;
+    opacity: 0.2;
+  }
   height: fit-content;
   position: relative;
-  @media (max-width: 1024px) {
+  @media (max-width: 1550px) {
+    padding: 120px 30px 30px 30px;
+  }
+  @media (max-width: 650px) {
     padding: 80px 25px 25px 25px;
     max-width:90% !important;
     margin:0 auto;
@@ -318,25 +318,38 @@ const VerticalDivider = styled.div`
   width: 90px;
   height: 0px;
 `
-const Card = styled.div`
-  border-radius: 20px;
-  padding: 20px 25px;
-  @media (max-width: 480px) {
+const Card = styled(GradientBackground)`
+  backdrop-filter: blur(40px);
+  &:before {
+    border-radius: 20px;
+    opacity: 0.2;
+  }
+  padding: 20px;
+  @media (max-width: 650px) {
     p {
       font-size: 14px;
     }
   }
 `
 const ProfileNFTInfo = styled.div`
-  @media (max-width: 480px) {
+  padding: 10px 50px;
+  @media (max-width: 1200px) {
+    padding: 10px 10px;
+  }
+  @media (max-width: 650px) {
     padding: 10px 0px;
   }
 `
 const StyledTabList = styled(TabList)`
   border-bottom: 2px solid;
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1) !important;
   font-weight: 400;
-  margin: 0px !important;
+  display: flex;
+  overflow: auto;
+  width: fit-content;
+  @media (max-width: 800px) {
+    width: auto;
+  }
   [aria-selected='true'] {
     border-color: #ffffff !important;
     border-bottom: 2px solid;
@@ -347,14 +360,14 @@ const StyledTabList = styled(TabList)`
 
 const StyledTab = styled(Tab)`
   font-size: 22px;
-  font-weight: 300;
-  padding: 20px 70px 20px 10px;
-  &:last-child {
-    padding: 20px 70px 20px 70px;
-  }
-  @media (max-width: 480px) {
-    font-size: 15px;
-    padding: 10px 35px 10px 0px;
+  font-weight: 400;
+  padding: 20px;
+  margin: 0 20px;
+  cursor: pointer;
+  @media (max-width: 1550px) {
+    font-size: 18px;
+    margin: 0 15px;
+    padding: 15px;
   }
 `
 const IconButtonWrapper = styled.div`

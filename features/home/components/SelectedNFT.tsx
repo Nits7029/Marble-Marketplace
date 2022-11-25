@@ -10,6 +10,11 @@ import {
 import { RoundedIconComponent } from 'components/RoundedIcon'
 import { convertMicroDenomToDenom } from 'util/conversion'
 import { useNearDollarValue } from 'hooks/useTokenDollarValue'
+import { GradientBackground, SecondGradientBackground } from 'styles/styles'
+import {
+  PINATA_PRIMARY_IMAGE_SIZE,
+  PINATA_SECONDARY_IMAGE_SIZE,
+} from 'util/constants'
 
 const SelectedNFT = () => {
   const [showData, setShowData] = useState<any>({})
@@ -44,10 +49,15 @@ const SelectedNFT = () => {
         creator: collection.creator_id,
         collectionName: collection.metadata.title,
         collectionLogo:
-          process.env.NEXT_PUBLIC_PINATA_URL + collection.metadata.media,
+          process.env.NEXT_PUBLIC_PINATA_URL +
+          collection.metadata.media +
+          PINATA_SECONDARY_IMAGE_SIZE,
         price:
           marketData.price && convertMicroDenomToDenom(marketData.price, 24),
-        nftLogo: process.env.NEXT_PUBLIC_PINATA_URL + data.metadata.media,
+        nftLogo:
+          process.env.NEXT_PUBLIC_PINATA_URL +
+          data.metadata.media +
+          PINATA_PRIMARY_IMAGE_SIZE,
       })
     } catch (err) {
       console.log('NFT Contract Error: ', err)
@@ -59,7 +69,7 @@ const SelectedNFT = () => {
   }, [])
   console.log('showData: ', showData)
   return (
-    <IntroContainer className="p-20">
+    <IntroContainer  className="p-20">
       <IntroWrapper>
         <Title>
           {/* TILL DEATH DO US PART */}
@@ -86,13 +96,13 @@ const SelectedNFT = () => {
           <PriceArea>
             <p>Price</p>
             <HStack alignItems="center">
-              <p className='near-text'>{Number(showData.price.toFixed(2))} Near</p>
+              <h1>{Number(showData.price.toFixed(2))} Near</h1>
               <h2>${Number(showData.price.toFixed(2)) * nearValue}</h2>
             </HStack>
           </PriceArea>
         )}
         <Stack>
-          <Link href="nft/6/2" passHref>
+          <Link href="/nft/6/2" passHref>
             <StyledButton>View Nft</StyledButton>
           </Link>
         </Stack>
@@ -114,8 +124,8 @@ const StyledButton = styled.button`
     inset 0px 7px 8px rgba(0, 0, 0, 0.2);
   color: black;
   font-size: 18px;
-  font-weight: 500;
-  @media (max-width: 480px) {
+  font-weight: bold;
+  @media (max-width: 800px) {
     width: 100%;
     height: 58px;
   }
@@ -126,12 +136,10 @@ const IntroContainer = styled.div`
   margin-top: 60px;
   height:100%;
   display: flex;
-  justify-content:center;
-  min-height: calc(100vh - 250px);
-  position:relative;
-
-  @media (max-width: 576px) {
-    padding: 0px;
+  margin-top: 50px;
+  justify-content: space-between;
+  @media (max-width: 800px) {
+    flex-direction: column-reverse;
     margin-top: 0px;
     justify-content:start;
   }
@@ -166,9 +174,9 @@ const Title = styled.div`
   position:relative;
 
   @media (max-width: 1550px) {
-    font-size: 35px;
+    font-size: 40px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 800px) {
     font-size: 26px;
     text-align: center;
     margin-top: 20px;
@@ -187,17 +195,20 @@ const Title = styled.div`
   }
 `
 
-const MiniInfoCard = styled.div`
-position: relative;
-width: 30%;
-border-radius: 20px;
-padding: 15px;
-
-@media (max-width: 1440px) {
-  width: 100%;
-  margin:0 auto;
-}
-
+const MiniInfoCard = styled(GradientBackground)`
+  width: 40%;
+  height: 110px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &:before {
+    border-radius: 20px;
+    opacity: 0.2;
+  }
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `
 
 const MiniInfoTitle = styled.div`
@@ -226,60 +237,19 @@ const Info = styled.div`
   display: flex;
   align-items: center;
 `
-const NFTPicture = styled.div`
-  max-width: 544px;
-  width:100%;
-  height:650px;
-  margin-left:auto;
-  flex:0 0 auto;
-  border-radius: 30px;
-  backdrop-filter: blur(15px);
-  border: 1px solid;
-  border-image-source: linear-gradient(
-    90.65deg,
-    #ffffff 0.82%,
-    rgba(0, 0, 0, 0) 98.47%
-  );
-  background: linear-gradient(0deg,#32303d,#1e222e) padding-box,linear-gradient(90.65deg,#83818194 0.82%,rgba(0,0,0,0) 105.47%) border-box;
-  box-shadow: 0px 7px 14px rgba(0, 0, 0, 0.1), inset 0px 14px 24px rgba(17, 20, 29, 0.4);
-  padding:37px;
-
-     
-  @media (max-width: 1440px) {
-    margin-left: 0 !important;
-    height:500px;
-    max-width:500px;
-  }
-   
-  @media (max-width: 1024px) {
-    margin-left: 0 !important;
-    height:500px;
-    max-width:500px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 100%;
-    padding: 20px;
-    margin-left: 0 !important;
-    height: 100%;
-  }
-
-
-  &:after {
-    content:"";
-    position:absolute;
-    top: -2px;
-    left:-5px;
-    width:544px !important;
-    height: 100% !important;
-    z-index:-1;
+const NFTPicture = styled(SecondGradientBackground)`
+  width: 40%;
+  &:before {
     border-radius: 30px;
-
+    opacity: 0.7;
+  }
+  padding: 37px;
   @media (max-width: 1550px) {
     padding: 30px;
   }
-  @media (max-width: 768px) {
-    width: 100% !important;
+  @media (max-width: 800px) {
+    width: 100%;
+    padding: 20px;
   }
  
 `
@@ -311,12 +281,6 @@ const IntroWrapper = styled.div`
   @media (max-width: 1550px) {
     row-gap: 20px;
   }
-
-  @media (max-width: 480px) {
-    width:100%;
-    order:2;
-    padding:0;
-  }
 `
 const PriceArea = styled.div`
   display: flex;
@@ -329,10 +293,9 @@ const PriceArea = styled.div`
     margin: 30px 0 10px 0;
   }
   h1 {
-    font-size: 45px;
+    font-size: 40px;
     font-family: Mulish;
-    font-weight: 800;
-    line-height: 33px;
+    font-weight: 900;
   }
   h2 {
     font-size: 20px;
@@ -351,7 +314,7 @@ const PriceArea = styled.div`
       font-size: 16px;
     }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 800px) {
     align-items: center;
     margin-bottom: 16px;
 

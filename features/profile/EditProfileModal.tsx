@@ -42,14 +42,14 @@ const PlaceBidModal = ({ onHandleSave, profileInfo }) => {
         isCentered
       >
         <ModalOverlay backdropFilter="blur(14px)" bg="rgba(0, 0, 0, 0.34)" />
-        <Container maxW="900px">
+        <Container>
           <Stack spacing={10}>
             <Stack>
-              <Text fontSize="30px" fontWeight="700">
+              <Text fontSize="30px" textAlign="center" fontWeight="700">
                 Edit your Profile
               </Text>
             </Stack>
-            <Stack spacing="40px">
+            <GridContainer>
               <Stack>
                 <InputLabel>User name</InputLabel>
                 <StyledInput
@@ -82,7 +82,7 @@ const PlaceBidModal = ({ onHandleSave, profileInfo }) => {
                   value={profile.discord}
                 />
               </Stack>
-            </Stack>
+            </GridContainer>
             <Button
               className="btn-buy btn-default"
               css={{
@@ -91,8 +91,6 @@ const PlaceBidModal = ({ onHandleSave, profileInfo }) => {
                 stroke: '$black',
                 width: '100%',
               }}
-              variant="primary"
-              size="large"
               onClick={() => {
                 onHandleSave(profile).then((value) => {
                   if (value) onClose()
@@ -112,39 +110,37 @@ const Container = styled(ModalContent)`
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   background: rgba(255, 255, 255, 0.06) !important;
   border-radius: 30px !important;
-  padding: 70px;
+  padding: 30px;
   color: white !important;
+  max-width: 900px !important;
+  @media (max-width: 1000px) {
+    max-width: 90vw !important;
+    padding: 5px;
+  }
 `
 const InputLabel = styled.div`
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0 20px;
 `
 const StyledInput = styled.input`
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 15px;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 20px;
   background: #272734;
   border-radius: 20px !important;
   display: flex;
   align-items: center;
-  height: 70px !important;
   font-family: Mulish;
 `
-
-const TokenLogoWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 60px;
-  padding: 10px 20px 10px 10px;
-  display: flex;
-  align-items: center;
-`
-
-const StyledInputRightElement = styled.div`
-  position: absolute;
-  right: 30px;
-  top: 8px;
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  @media (max-width: 650px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export default PlaceBidModal

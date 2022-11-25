@@ -49,18 +49,15 @@ const StyledButton = styled('button', {
   '& svg': {
     color: '$$iconColor',
   },
-
+  '@media (max-width: 650px)': {
+    height: '56px',
+  },
   variants: {
     variant: {
       primary: {
-        $$textColor: '$colors$white',
-        $$iconColor: '$colors$white',
-
-        $$backgroundColor: '$colors$dark95',
-        $$backgroundColorOnHover: '$colors$black',
-        $$backgroundColorOnActive: '$colors$dark85',
-
-        $$borderColorOnFocus: '$borderColors$selected',
+        width: '100%',
+        color: 'black',
+        background: 'white',
       },
       secondary: {
         $$textColor: '$textColors$primary',
